@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "ok_or"
+name = "result_utilsr"
 version = "0.1.0"

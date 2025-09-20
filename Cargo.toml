@@ -1,5 +1,5 @@
 [package]
-name = "ok_or"
+name = "result_utilsr"
 version = "0.1.0"
 edition = "2024"
 
