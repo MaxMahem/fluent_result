@@ -6,7 +6,7 @@
 ///
 /// # Examples
 /// ```rust
-/// use ok_or::IntoOk;
+/// use result_utils::IntoOk;
 ///
 /// let result_owned: Result<u32, ()> = Ok(42);
 /// let result_borrowed: Result<&u32, ()> = Ok(&42);
@@ -26,6 +26,11 @@ pub trait IntoOk<E>: Sized {
     fn as_ok_mut(&mut self) -> Result<&mut Self, E>;
 }
 
+/// Implements `IntoOk<T>` for all types.
+///
+/// # Type Parameters
+/// - `T`: The success type to use in the `Result`.
+/// - `E`: The error type.
 impl<T, E> IntoOk<E> for T {
     fn into_ok(self) -> Result<Self, E> {
         Ok(self)

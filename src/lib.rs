@@ -5,5 +5,5 @@ pub mod unwrap_never;
 
 pub use into_err::IntoErr;
 pub use into_ok::IntoOk;
-pub use ok_or_panic::OkOr;
+pub use ok_or_panic::OkOrPanic;
 pub use unwrap_never::UnwrapNever;

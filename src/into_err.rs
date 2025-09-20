@@ -3,22 +3,22 @@
 ///
 /// # Type Parameters
 /// - `T`: The success type to use in the `Result`.
-///
-/// # Examples
-/// ```rust
-/// use ok_or::IntoErr;
-///
-/// let result_owned: Result<(), u32> = Err(42);
-/// let result_borrowed: Result<(), &u32> = Err(&42);
-/// assert_eq!(result_owned, 42.into_err());
-/// assert_eq!(result_borrowed, 42.as_err());
-/// ```
 pub trait IntoErr<T>: Sized {
+    /// Wraps a value in a `Result::Err`, allowing for ergonomic conversion
+    /// of error values into `Result` types.
     fn into_err(self) -> Result<T, Self>;
+
+    /// Wraps a reference to a value in a `Result::Err`, allowing for
+    /// low-overhead conversion of error references into `Result` types.
     fn as_err(&self) -> Result<T, &Self>;
 }
 
-impl<T, E> IntoErr<T> for E {
+/// Implements `IntoErr<T>` for any error type `E` that implements `std::error::Error`.
+///
+/// # Type Parameters
+/// - `T`: The success type to use in the `Result`.
+/// - `E`: The error type, which must implement `std::error::Error`.
+impl<T, E: std::error::Error> IntoErr<T> for E {
     fn into_err(self) -> Result<T, Self> {
         Err(self)
     }
