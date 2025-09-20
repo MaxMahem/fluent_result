@@ -1,0 +1,40 @@
+/// A trait that wraps a value in a `Result::Ok`, allowing ergonomic conversion
+/// of values into `Result` types.
+///
+/// # Type Parameters
+/// - `E`: The error type to use in the `Result`.
+///
+/// # Examples
+/// ```rust
+/// use ok_or::IntoOk;
+///
+/// let result_owned: Result<u32, ()> = Ok(42);
+/// let result_borrowed: Result<&u32, ()> = Ok(&42);
+/// let result_mut_borrowed: Result<&mut u32, ()> = Ok(&mut 42);
+/// assert_eq!(result_owned, 42.into_ok());
+/// assert_eq!(result_borrowed, 42.as_ok());
+/// assert_eq!(result_mut_borrowed, 42.as_ok_mut());
+/// ```
+pub trait IntoOk<E>: Sized {
+    /// Converts the value into `Ok(self)`.
+    fn into_ok(self) -> Result<Self, E>;
+
+    /// Returns a reference to the value wrapped in `Ok`.
+    fn as_ok(&self) -> Result<&Self, E>;
+
+    /// Returns a mutable reference to the value wrapped in `Ok`.
+    fn as_ok_mut(&mut self) -> Result<&mut Self, E>;
+}
+
+impl<T, E> IntoOk<E> for T {
+    fn into_ok(self) -> Result<Self, E> {
+        Ok(self)
+    }
+    fn as_ok(&self) -> Result<&Self, E> {
+        Ok(self)
+    }
+
+    fn as_ok_mut(&mut self) -> Result<&mut Self, E> {
+        Ok(self)
+    }
+}
