@@ -15,15 +15,24 @@
 /// assert_eq!(result_borrowed, 42.as_ok());
 /// assert_eq!(result_mut_borrowed, 42.as_ok_mut());
 /// ```
-pub trait IntoOk<E>: Sized {
-    /// Converts the value into `Ok(self)`.
-    fn into_ok(self) -> Result<Self, E>;
+pub trait IntoOk<E> {
+    /// Moves the value into a `Ok(self)`.
+    fn into_ok(self) -> Result<Self, E>
+    where
+        Self: Sized,
+    {
+        Ok(self)
+    }
 
-    /// Returns a reference to the value wrapped in `Ok`.
-    fn as_ok(&self) -> Result<&Self, E>;
+    /// Wraps a borrowed value in a `Ok`.
+    fn as_ok(&self) -> Result<&Self, E> {
+        Ok(self)
+    }
 
-    /// Returns a mutable reference to the value wrapped in `Ok`.
-    fn as_ok_mut(&mut self) -> Result<&mut Self, E>;
+    /// Wraps a mutable borrowed value in a `Ok`.
+    fn as_ok_mut(&mut self) -> Result<&mut Self, E> {
+        Ok(self)
+    }
 }
 
 /// Implements `IntoOk<T>` for all types.
@@ -31,15 +40,4 @@ pub trait IntoOk<E>: Sized {
 /// # Type Parameters
 /// - `T`: The success type to use in the `Result`.
 /// - `E`: The error type.
-impl<T, E> IntoOk<E> for T {
-    fn into_ok(self) -> Result<Self, E> {
-        Ok(self)
-    }
-    fn as_ok(&self) -> Result<&Self, E> {
-        Ok(self)
-    }
-
-    fn as_ok_mut(&mut self) -> Result<&mut Self, E> {
-        Ok(self)
-    }
-}
+impl<T, E> IntoOk<E> for T {}
