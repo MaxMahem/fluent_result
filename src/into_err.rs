@@ -1,6 +1,4 @@
 /// A trait that converts a value into a `Result::Err`.
-///
-/// Note this is only implemented for owned types that implement `std::error::Error`, not all types.
 pub trait IntoErr {
     /// Move a error value into a `Result::Err`.
     ///
@@ -26,8 +24,8 @@ pub trait IntoErr {
     }
 }
 
-/// Implements `IntoErr<T>` for any error type `E` that implements `std::error::Error`.
+/// Implements `IntoErr<T>` for all types.
 ///
 /// # Type Parameters
-/// - `E`: The error type, which must implement `std::error::Error`.
-impl<E: std::error::Error> IntoErr for E {}
+/// - `E`: The error type.
+impl<E> IntoErr for E {}
