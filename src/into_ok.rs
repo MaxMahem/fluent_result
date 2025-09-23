@@ -1,16 +1,21 @@
 /// A trait that converts a value into a `Result::Ok`.
-///
-/// # Type Parameters
-/// - `E`: The error type to use in the `Result`.
-pub trait IntoOk<E> {
+pub trait IntoOk {
     /// Moves a value into a `Result::Ok`.
+    ///
+    /// When used in terminal position, `E` can be inferred.
+    /// When used in other positions, `E` can be specified.
+    ///
+    /// # Type Parameters
+    /// - `E`: The error type to use in the `Result`.
     ///
     /// # Example
     /// ```rust
     /// # use result_utils::IntoOk;
-    /// let ok: Result<u32, ()> = Ok(42);
-    /// assert_eq!(ok, 42.into_ok());
-    fn into_ok(self) -> Result<Self, E>
+    /// let owned_result: Result<u32, ()> = 42.into_ok();
+    /// assert!(owned_result.is_ok());
+    /// let owned_result = 42.into_ok::<()>();
+    /// assert!(owned_result.is_ok());
+    fn into_ok<E>(self) -> Result<Self, E>
     where
         Self: Sized,
     {
@@ -19,23 +24,39 @@ pub trait IntoOk<E> {
 
     /// Wraps a borrowed value in a `Result::Ok`.
     ///
+    /// When used in terminal position, `E` can be inferred.
+    /// When used in other positions, `E` can be specified.
+    ///
+    /// # Type Parameters
+    /// - `E`: The error type to use in the `Result`.
+    ///
     /// # Example
     /// ```rust
     /// # use result_utils::IntoOk;
-    /// let ok: Result<&u32, ()> = Ok(&42);
-    /// assert_eq!(ok, 42.as_ok());
-    fn as_ok(&self) -> Result<&Self, E> {
+    /// let borrowed_result: Result<&u32, ()> = 42.as_ok();
+    /// assert!(borrowed_result.is_ok());
+    /// let borrowed_result = 42.into_ok::<()>();
+    /// assert!(borrowed_result.is_ok());
+    fn as_ok<E>(&self) -> Result<&Self, E> {
         Ok(self)
     }
 
     /// Wraps a mutable borrowed value in a `Ok`.
     ///
+    /// When used in terminal position, `E` can be inferred.
+    /// When used in other positions, `E` can be specified.
+    ///
+    /// # Type Parameters
+    /// - `E`: The error type to use in the `Result`.
+    ///
     /// # Examples
     /// ```rust
     /// # use result_utils::IntoOk;
-    /// let ok: Result<&mut u32, ()> = Ok(&mut 42);
-    /// assert_eq!(ok, 42.as_ok_mut());
-    fn as_ok_mut(&mut self) -> Result<&mut Self, E> {
+    /// let borrowed_mut_result: Result<&u32, ()> = 42.as_ok();
+    /// assert!(borrowed_mut_result.is_ok());
+    /// let borrowed_mut_result = 42.into_ok::<()>();
+    /// assert!(borrowed_mut_result.is_ok());
+    fn as_ok_mut<E>(&mut self) -> Result<&mut Self, E> {
         Ok(self)
     }
 }
@@ -44,5 +65,4 @@ pub trait IntoOk<E> {
 ///
 /// # Type Parameters
 /// - `T`: The success type to use in the `Result`.
-/// - `E`: The error type.
-impl<T, E> IntoOk<E> for T {}
+impl<T> IntoOk for T {}

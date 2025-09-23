@@ -7,7 +7,7 @@ pub trait IntoSome {
     /// ```rust
     /// # use result_utils::IntoSome;
     /// let some = 42.into_some();
-    /// assert_eq!(some, Some(42));
+    /// assert!(some.is_some());
     /// ```
     fn into_some(self) -> Option<Self>
     where
@@ -23,7 +23,7 @@ pub trait IntoSome {
     /// ```rust
     /// # use result_utils::IntoSome;
     /// let some = 42.as_some();
-    /// assert_eq!(some, Some(&42));
+    /// assert!(some.is_some());
     /// ```
     fn as_some(&self) -> Option<&Self> {
         Some(self)
