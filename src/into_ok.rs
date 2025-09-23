@@ -1,22 +1,15 @@
-/// A trait that wraps a value in a `Result::Ok`, allowing ergonomic conversion
-/// of values into `Result` types.
+/// A trait that converts a value into a `Result::Ok`.
 ///
 /// # Type Parameters
 /// - `E`: The error type to use in the `Result`.
-///
-/// # Examples
-/// ```rust
-/// use result_utils::IntoOk;
-///
-/// let result_owned: Result<u32, ()> = Ok(42);
-/// let result_borrowed: Result<&u32, ()> = Ok(&42);
-/// let result_mut_borrowed: Result<&mut u32, ()> = Ok(&mut 42);
-/// assert_eq!(result_owned, 42.into_ok());
-/// assert_eq!(result_borrowed, 42.as_ok());
-/// assert_eq!(result_mut_borrowed, 42.as_ok_mut());
-/// ```
 pub trait IntoOk<E> {
-    /// Moves the value into a `Ok(self)`.
+    /// Moves a value into a `Result::Ok`.
+    ///
+    /// # Example
+    /// ```rust
+    /// # use result_utils::IntoOk;
+    /// let ok: Result<u32, ()> = Ok(42);
+    /// assert_eq!(ok, 42.into_ok());
     fn into_ok(self) -> Result<Self, E>
     where
         Self: Sized,
@@ -24,12 +17,24 @@ pub trait IntoOk<E> {
         Ok(self)
     }
 
-    /// Wraps a borrowed value in a `Ok`.
+    /// Wraps a borrowed value in a `Result::Ok`.
+    ///
+    /// # Example
+    /// ```rust
+    /// # use result_utils::IntoOk;
+    /// let ok: Result<&u32, ()> = Ok(&42);
+    /// assert_eq!(ok, 42.as_ok());
     fn as_ok(&self) -> Result<&Self, E> {
         Ok(self)
     }
 
     /// Wraps a mutable borrowed value in a `Ok`.
+    ///
+    /// # Examples
+    /// ```rust
+    /// # use result_utils::IntoOk;
+    /// let ok: Result<&mut u32, ()> = Ok(&mut 42);
+    /// assert_eq!(ok, 42.as_ok_mut());
     fn as_ok_mut(&mut self) -> Result<&mut Self, E> {
         Ok(self)
     }

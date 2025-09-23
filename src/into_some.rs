@@ -1,6 +1,14 @@
-/// A trait that wraps a value in an `Option<Self>`.
+/// A trait that converts a value into an `Option::Some`.
 pub trait IntoSome {
-    /// Moves a value into an `Option<Self>`.
+    /// Moves a value into an `Option::Some`.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// # use result_utils::IntoSome;
+    /// let some = 42.into_some();
+    /// assert_eq!(some, Some(42));
+    /// ```
     fn into_some(self) -> Option<Self>
     where
         Self: Sized,
@@ -8,7 +16,15 @@ pub trait IntoSome {
         Some(self)
     }
 
-    /// Wraps a borrowed value in an `Option<Self>`.
+    /// Wraps a borrowed value in an `Option::Some`.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// # use result_utils::IntoSome;
+    /// let some = 42.as_some();
+    /// assert_eq!(some, Some(&42));
+    /// ```
     fn as_some(&self) -> Option<&Self> {
         Some(self)
     }

@@ -1,19 +1,23 @@
-/// A trait that wraps a value in a `Result::Ok`, allowing ergonomic conversion
-/// of values into `Result` types.
+/// A trait that converts a value into a `Result::Err`.
+///
+/// Note this is only implemented for owned types that implement `std::error::Error`, not all types.
 ///
 /// # Type Parameters
 /// - `T`: The success type to use in the `Result`.
 pub trait IntoErr<T> {
-    /// Move a value into a `Result::Err`.
+    /// Move a error value into a `Result::Err`.
+    ///
+    /// # Example
+    /// ```rust
+    /// # use result_utils::IntoErr;
+    /// let err = std::fmt::Error;
+    /// let result: Result<u8, std::fmt::Error> = err.into_err();
+    /// assert!(result.is_err());
+    /// ```
     fn into_err(self) -> Result<T, Self>
     where
         Self: Sized,
     {
-        Err(self)
-    }
-
-    /// Wraps a borrowed value in a `Result::Err`.
-    fn as_err(&self) -> Result<T, &Self> {
         Err(self)
     }
 }

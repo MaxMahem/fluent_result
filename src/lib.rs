@@ -9,3 +9,10 @@ pub use into_ok::IntoOk;
 pub use into_some::IntoSome;
 pub use ok_or_panic::OkOrPanic;
 pub use unwrap_never::UnwrapNever;
+
+mod internal {
+    pub trait Sealed {}
+
+    //impl<T> Sealed for Result<T, std::convert::Infallible> {}
+    impl<T, E> Sealed for Result<T, E> {}
+}
