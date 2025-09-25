@@ -1,10 +1,6 @@
-use crate::internal::Sealed;
-
-/// A trait for handling `Result<(), E>` error cases by sinking the error into a side-effecting function.
-///
-/// This is useful for handling the error case of a unit function.
-pub trait SinkErr<E>: Sealed {
-    /// If `self` is Err(e)`, calls the provided function with `e`.
+/// A trait for handling [UnitResult<E>] error cases by sinking the error into a side-effecting function.
+pub trait SinkErr<E>: crate::internal::Sealed {
+    /// If `self` is Err(e)`, sinks the error value into the provided function.
     ///
     /// # Examples
     ///
@@ -19,7 +15,7 @@ pub trait SinkErr<E>: Sealed {
         F: FnOnce(E);
 }
 
-impl<E> SinkErr<E> for Result<(), E> {
+impl<E> SinkErr<E> for crate::UnitResult<E> {
     fn sink_err<F>(self, function: F)
     where
         F: FnOnce(E),

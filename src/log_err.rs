@@ -1,8 +1,3 @@
-/// An alias for result types with a unit result and variable error type.
-///
-/// Useful for failable methods that have no specific return value.
-pub type UnitResult<E> = Result<(), E>;
-
 /// A trait for logging errors from [UnitResult]s (`Result<(), E>`) to a tracing sink.
 pub trait LogErr: crate::internal::Sealed {
     /// The error type.
@@ -87,7 +82,7 @@ pub trait LogErr: crate::internal::Sealed {
 }
 
 /// Implementation for all [UnitResult<E>].
-impl<E> LogErr for UnitResult<E> {
+impl<E> LogErr for crate::UnitResult<E> {
     type Error = E;
 
     #[track_caller]

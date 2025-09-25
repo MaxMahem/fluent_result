@@ -20,6 +20,14 @@ pub use unwrap_never::UnwrapNever;
 #[cfg(feature = "tracing")]
 pub use log_err::LogErr;
 
+/// An alias for result types with a unit result and variable error type.
+///
+/// Useful for failable methods that have no specific return value.
+pub type UnitResult<E> = Result<(), E>;
+
+/// An alias for infallible result types. That is a result type that cannot fail.
+pub type InfallibleResult<T> = Result<T, std::convert::Infallible>;
+
 mod internal {
     pub trait Sealed {}
 
