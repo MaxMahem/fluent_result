@@ -1,7 +1,6 @@
 pub mod handle_err;
 pub mod into;
-pub mod map_to;
-pub mod or_err;
+pub mod map;
 pub mod unwrap_never;
 pub mod unwrap_ok;
 
@@ -9,8 +8,6 @@ pub mod unwrap_ok;
 pub mod log;
 
 pub use handle_err::HandleErr;
-pub use map_to::MapTo;
-pub use or_err::OrErr;
 pub use unwrap_never::UnwrapNever;
 pub use unwrap_ok::UnwrapOk;
 

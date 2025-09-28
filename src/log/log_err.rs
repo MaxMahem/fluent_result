@@ -9,40 +9,27 @@ pub trait LogErr: crate::internal::Sealed {
     /// ```rust
     /// use result_utils::log::LogErr;
     ///
-    /// Err("oops").log_err(); // Logs at ERROR level
+    /// Err("oops").log_err(tracing::Level::ERROR); // Logs at ERROR level
     /// ```
-    fn log_err(self)
+    fn log_err(self, level: tracing::Level)
     where
         Self::Error: std::fmt::Debug;
-
-    /// Handles [Err] variants by emitting `msg` at `Level::ERROR`.
-    ///
-    /// # Examples
-    /// ```rust
-    /// use result_utils::log::LogErr;
-    ///
-    /// Err("oops").log_err_msg("Something went wrong");
-    /// ```
-    fn log_err_msg<D>(self, msg: D)
-    where
-        D: std::fmt::Display;
 }
 
 /// Implementation for all [UnitResult<E>].
 impl<E> LogErr for crate::UnitResult<E> {
     type Error = E;
 
-    fn log_err(self)
+    fn log_err(self, level: tracing::Level)
     where
         E: std::fmt::Debug,
     {
-        _ = self.inspect_err(|e| tracing::error!(error = ?e));
-    }
-
-    fn log_err_msg<D>(self, msg: D)
-    where
-        D: std::fmt::Display,
-    {
-        _ = self.inspect_err(|_| tracing::error!(%msg));
+        match level {
+            tracing::Level::ERROR => _ = self.inspect_err(|e| tracing::error!(error = ?e)),
+            tracing::Level::WARN => _ = self.inspect_err(|e| tracing::warn!(error = ?e)),
+            tracing::Level::INFO => _ = self.inspect_err(|e| tracing::info!(error = ?e)),
+            tracing::Level::DEBUG => _ = self.inspect_err(|e| tracing::debug!(error = ?e)),
+            tracing::Level::TRACE => _ = self.inspect_err(|e| tracing::trace!(error = ?e)),
+        }
     }
 }

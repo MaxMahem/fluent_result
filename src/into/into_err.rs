@@ -12,9 +12,9 @@ pub trait IntoErr {
     /// ```rust
     /// use result_utils::into::IntoErr;
     ///
-    /// let err = std::fmt::Error.into_err::<()>();
+    /// let err = "error".into_err::<()>();
     /// assert!(err.is_err());
-    /// let err: Result<(), std::fmt::Error> = std::fmt::Error.into_err();
+    /// let err: Result<(), &str> = "error".into_err();
     /// assert!(err.is_err());
     /// ```
     fn into_err<T>(self) -> Result<T, Self>

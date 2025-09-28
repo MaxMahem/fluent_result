@@ -18,20 +18,6 @@ pub trait OkLog: crate::internal::Sealed {
     fn ok_log(self) -> Option<Self::Success>
     where
         Self::Error: std::fmt::Debug;
-
-    /// Transform `Result<T, E>` into `Option<T>` by logging 'msg' for [Err] variants.
-    ///
-    /// # Example
-    /// ```rust
-    /// use result_utils::log::OkLog;
-    ///
-    /// let result: Result<u32, &str> = Ok(42);
-    /// let some = result.ok_log_msg("An error occurred");
-    /// assert!(some.is_some());
-    /// ```
-    fn ok_log_msg<D>(self, msg: D) -> Option<Self::Success>
-    where
-        D: std::fmt::Display;
 }
 
 impl<T, E> OkLog for Result<T, E> {
@@ -43,12 +29,5 @@ impl<T, E> OkLog for Result<T, E> {
         E: std::fmt::Debug,
     {
         self.inspect_err(|e| tracing::error!(err = ?e)).ok()
-    }
-
-    fn ok_log_msg<D>(self, msg: D) -> Option<Self::Success>
-    where
-        D: std::fmt::Display,
-    {
-        self.inspect_err(|_| tracing::error!(%msg)).ok()
     }
 }
