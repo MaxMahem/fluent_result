@@ -1,26 +1,18 @@
-pub mod into_err;
-pub mod into_ok;
-pub mod into_ok_or_panic;
-pub mod into_some;
+pub mod handle_err;
+pub mod into;
 pub mod map_to;
 pub mod or_err;
-pub mod sink_err;
 pub mod unwrap_never;
+pub mod unwrap_ok;
 
 #[cfg(feature = "tracing")]
-pub mod log_err;
+pub mod log;
 
-pub use into_err::IntoErr;
-pub use into_ok::IntoOk;
-pub use into_ok_or_panic::IntoOkOrPanic;
-pub use into_some::IntoSome;
+pub use handle_err::HandleErr;
 pub use map_to::MapTo;
 pub use or_err::OrErr;
-pub use sink_err::SinkErr;
 pub use unwrap_never::UnwrapNever;
-
-#[cfg(feature = "tracing")]
-pub use log_err::LogErr;
+pub use unwrap_ok::UnwrapOk;
 
 /// An alias for result types with a unit result and variable error type.
 ///

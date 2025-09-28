@@ -10,7 +10,8 @@ pub trait IntoErr {
     ///
     /// # Example
     /// ```rust
-    /// # use result_utils::IntoErr;
+    /// use result_utils::into::IntoErr;
+    ///
     /// let err = std::fmt::Error.into_err::<()>();
     /// assert!(err.is_err());
     /// let err: Result<(), std::fmt::Error> = std::fmt::Error.into_err();
