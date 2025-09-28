@@ -49,7 +49,7 @@ pub trait IntoOk {
     /// # Type Parameters
     /// - `E`: The error type to use in the `Result`.
     ///
-    /// # Examples
+    /// # Example
     /// ```rust
     /// # use result_utils::IntoOk;
     /// let borrowed_mut_result: Result<&u32, ()> = 42.as_ok();

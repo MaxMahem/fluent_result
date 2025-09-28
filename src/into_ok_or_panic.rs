@@ -8,7 +8,6 @@ use crate::into_ok::IntoOk;
 /// and you want to propagate success while substituting a new error type (`EOut`).
 ///
 /// # Type Parameters
-///
 /// * `T` - The success type.
 pub trait IntoOkOrPanic<T>: Sealed {
     /// Converts `Result<T, EIn>` into `Result<T, EOut>` by unwrapping the value.
@@ -16,15 +15,12 @@ pub trait IntoOkOrPanic<T>: Sealed {
     /// When the destination type is known, `E` can be inferred, otherwise, `E` can be specified.
     ///
     /// # Type Parameters
-    ///
     /// * `EOut` - The error type in the Result after conversion.
     ///
     /// # Panics
-    ///
     /// Panics if the original result is `Err`, using `unwrap()` internally.
     ///
     /// # Example
-    ///
     /// ```rust
     /// # use result_utils::IntoOkOrPanic;
     /// let result: Result<i32, &str> = Ok(42);
@@ -42,19 +38,15 @@ pub trait IntoOkOrPanic<T>: Sealed {
     /// When the destination type is known, `E` can be inferred, otherwise, `E` can be specified.
     ///
     /// # Type Parameters
-    ///
     /// * `EOut` - The error type in the Result after conversion.
     ///
     /// # Arguments
-    ///
     /// * `msg` - A message to display if the original result is `Err`.
     ///
     /// # Panics
-    ///
     /// Panics with the provided message if the original result is `Err`.
     ///
-    /// # Examples
-    ///
+    /// # Example
     /// ```rust
     /// # use result_utils::IntoOkOrPanic;
     /// let result: Result<i32, &str> = Ok(42);

@@ -2,8 +2,16 @@
 pub trait SinkErr<E>: crate::internal::Sealed {
     /// If `self` is Err(e)`, sinks the error value into the provided function.
     ///
-    /// # Examples
+    /// # Type Parameters
+    /// - `E`: The error type.
     ///
+    /// # Parameters
+    /// - `function`: The function to sink the error into.
+    ///
+    /// # Returns
+    /// - `()`
+    ///
+    /// # Example
     /// ```rust
     /// # use result_utils::SinkErr;
     /// let mut captured = None;

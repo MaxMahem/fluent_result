@@ -1,4 +1,7 @@
 /// A trait for unwrapping the [Ok] varaint of an [InfallibleResult] with better expressed intentionality.
+///
+/// # Type Parameters
+/// - `T`: The success type.
 pub trait UnwrapNever<T>: crate::internal::Sealed {
     /// Unwraps a `Result<T, Infallible>` without the possibility of panic.
     /// Functionaly this is the same as calling `Result.unwrap()`

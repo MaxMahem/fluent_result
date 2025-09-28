@@ -3,6 +3,7 @@ pub mod into_ok;
 pub mod into_ok_or_panic;
 pub mod into_some;
 pub mod map_to;
+pub mod or_err;
 pub mod sink_err;
 pub mod unwrap_never;
 
@@ -14,6 +15,7 @@ pub use into_ok::IntoOk;
 pub use into_ok_or_panic::IntoOkOrPanic;
 pub use into_some::IntoSome;
 pub use map_to::MapTo;
+pub use or_err::OrErr;
 pub use sink_err::SinkErr;
 pub use unwrap_never::UnwrapNever;
 

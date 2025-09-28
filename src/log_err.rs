@@ -6,7 +6,6 @@ pub trait LogErr: crate::internal::Sealed {
     /// Log the error to the tracing sink as `Level::ERROR`.
     ///
     /// # Example
-    ///
     /// ```rust
     /// # use result_utils::LogErr;
     /// Err("oops").log_err(); // Logs at ERROR level
@@ -17,8 +16,10 @@ pub trait LogErr: crate::internal::Sealed {
 
     /// Log the error to the tracing sink at a specific level.
     ///
-    /// # Example
+    /// # Arguments
+    /// - `level`: The level to log at.
     ///
+    /// # Example
     /// ```rust
     /// # use result_utils::LogErr;
     /// use tracing::Level;
@@ -31,8 +32,10 @@ pub trait LogErr: crate::internal::Sealed {
 
     /// Log the error to the tracing sink as `Level::ERROR` via a custom formatter.
     ///
-    /// # Example
+    /// # Arguments
+    /// - `to_display`: A function that takes the error and returns a `Display` value.
     ///
+    /// # Example
     /// ```rust
     /// # use result_utils::LogErr;
     /// use std::fmt::Display;
@@ -46,8 +49,11 @@ pub trait LogErr: crate::internal::Sealed {
 
     /// Log the error to the tracing sink at a specific level via a custom formatter.
     ///
-    /// # Example
+    /// # Arguments
+    /// - `level`: The level to log at.
+    /// - `to_display`: A function that takes the error and returns a `Display` value.
     ///
+    /// # Example
     /// ```rust
     /// # use result_utils::LogErr;
     /// use std::fmt::Display;
@@ -62,6 +68,9 @@ pub trait LogErr: crate::internal::Sealed {
 
     /// Log the error to the tracing sink as `Level::ERROR` with a custom message.
     ///
+    /// # Arguments
+    /// - `message`: The message to log.
+    ///
     /// # Examples
     /// ```rust
     /// # use result_utils::LogErr;
@@ -70,6 +79,10 @@ pub trait LogErr: crate::internal::Sealed {
     fn log_err_msg(self, message: &str);
 
     /// Log the error to the tracing sink at a specific level with a custom message.
+    ///
+    /// # Arguments
+    /// - `level`: The level to log at.
+    /// - `message`: The message to log.
     ///
     /// # Examples
     /// ```rust

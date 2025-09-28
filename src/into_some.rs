@@ -3,7 +3,6 @@ pub trait IntoSome {
     /// Moves a value into an `Option::Some`.
     ///
     /// # Example
-    ///
     /// ```rust
     /// # use result_utils::IntoSome;
     /// let some = 42.into_some();
@@ -19,7 +18,6 @@ pub trait IntoSome {
     /// Wraps a borrowed value in an `Option::Some`.
     ///
     /// # Example
-    ///
     /// ```rust
     /// # use result_utils::IntoSome;
     /// let some = 42.as_some();

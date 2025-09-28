@@ -2,6 +2,7 @@ use crate::internal;
 
 /// Extension trait for transforming `Result<T, E>` into `Result<U, E>`
 pub trait MapTo: internal::Sealed {
+    /// The error type.
     type Error;
 
     /// Maps `Result<T, E>` into `Result<U, E>` by returning `Ok(other)` if the value is [Ok],
@@ -10,7 +11,10 @@ pub trait MapTo: internal::Sealed {
     /// Analogous to [Result::map(|_| other)](Result::map), but uses a fixed value instead of calling a function.
     ///
     /// # Type Parameters
-    /// - `TOther`: The type of the value to return in the `Ok` variant.    
+    /// - `TOther`: The type of the value to return in the `Ok` variant.
+    ///
+    /// # Parameters
+    /// - `other`: The value to return in the `Ok` variant.
     ///
     /// # Example
     ///```rust
