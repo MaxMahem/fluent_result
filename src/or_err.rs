@@ -26,6 +26,6 @@ impl<T, E> OrErr for Result<T, E> {
     type Ok = T;
 
     fn or_err<EOut>(self, err: EOut) -> Result<T, EOut> {
-        Err(err)
+        self.map_err(|_| err)
     }
 }
