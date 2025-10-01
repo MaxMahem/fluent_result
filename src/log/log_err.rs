@@ -1,3 +1,4 @@
+use crate::UnitResult;
 use crate::log::{Level, TapLog};
 
 /// Provides postfix handlers for [Err] variants of `UnitResult` (Result<(), E>) via logging them with [tracing].
@@ -24,8 +25,8 @@ pub trait LogErr: crate::internal::Sealed {
         Self::Error: std::fmt::Debug;
 }
 
-/// Implementation for all [UnitResult<E>].
-impl<E> LogErr for crate::UnitResult<E> {
+/// Implementation for all [UnitResult].
+impl<E> LogErr for UnitResult<E> {
     type Error = E;
 
     fn log_err(self, level: tracing::Level, ctx: &str)

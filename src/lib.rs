@@ -7,6 +7,7 @@ mod unwrap_never;
 mod unwrap_result;
 
 #[cfg(feature = "tracing")]
+/// Provides traits for transforming and manipulating [Result] and [Option] variants with `tracing`.
 pub mod log;
 
 pub use handle_err::HandleErr;

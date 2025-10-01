@@ -1,6 +1,6 @@
 use crate::log::{Level, TapLog};
 
-/// Provides postfix helpers for transforming `Result<T, E>` into `Option<T>` by logging the [Err] variant with [tracing].
+/// Provides postfix helpers for transforming [Result<T, E>] into `Option<T>` by logging the [Err] variant with [tracing].
 pub trait OkLog: crate::internal::Sealed {
     /// The type of the success value.
     type Success;
@@ -8,7 +8,7 @@ pub trait OkLog: crate::internal::Sealed {
     /// The type of the error value.
     type Error;
 
-    /// Transform `Result<T, E>` into `Option<T>` by logging the [Debug] value of [Err] variants at the specified `tracing::Level`
+    /// Transform [Result<T, E>] into `Option<T>` by logging the [Debug] value of [Err] variants at the specified [tracing::Level]
     /// with a contextual message (`ctx`). If `ctx` is empty, then it is omitted.
     ///
     /// # Example

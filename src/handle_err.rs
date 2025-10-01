@@ -1,4 +1,6 @@
-/// Provides a postfix helper for handling `UnitResult` [Err] variants by sinking them into a side-effecting function.
+use crate::UnitResult;
+
+/// Provides a postfix helper for handling [UnitResult] [Err] variants by sinking them into a side-effecting function.
 ///
 /// # Type Parameters
 /// - `E`: The error type.
@@ -18,7 +20,7 @@ pub trait HandleErr<E>: crate::internal::Sealed {
         F: FnOnce(E);
 }
 
-impl<E> HandleErr<E> for crate::UnitResult<E> {
+impl<E> HandleErr<E> for UnitResult<E> {
     fn handle_err<F>(self, sink: F)
     where
         F: FnOnce(E),

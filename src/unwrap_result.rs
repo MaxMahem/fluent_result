@@ -1,21 +1,21 @@
 use crate::into::IntoResult;
 
-/// Postfix helpers for transforming `Result<T, EIn>` into `Result<T, EOut>`
+/// Postfix helpers for transforming [Result<T, EIn>] into [Result<T, EOut>]
 /// by unwrapping the inner value and rewrapping it in a new error context.
 ///
-/// This trait is useful when the original error type (`EIn`) is should not be possible,
+/// This trait is useful when the original error type (`EIn`) should not be possible,
 /// or represents a fatal/logic error, and you want to propagate success while substituting
 /// a new error type (`EOut`).
 ///
 /// # Type Parameters
 /// * `T` - The success type.
 pub trait UnwrapResult<T>: crate::internal::Sealed {
-    /// Converts `Result<T, EIn>` into `Result<T, EOut>` by unwrapping the value.
+    /// Converts [Result<T, EIn>] into [Result<T, EOut>] by unwrapping the value.
     ///
     /// When the destination type is known, `E` can be inferred, otherwise, it can be specified.
     ///
     /// # Panics
-    /// Panics if the original result is `Err`, using `unwrap()` internally.
+    /// Panics if the original result is [Err], using [Result::unwrap()].
     ///
     /// # Example
     /// ```rust
@@ -29,12 +29,12 @@ pub trait UnwrapResult<T>: crate::internal::Sealed {
     #[track_caller]
     fn unwrap_ok<EOut>(self) -> Result<T, EOut>;
 
-    /// Converts `Result<T, EIn>` into `Result<T, EOut>` by unwrapping the value with a custom panic message.
+    /// Converts [Result<T, EIn>] into [Result<T, EOut>] by unwrapping the value with a custom panic message.
     ///
     /// When the destination type is known, `EOut` can be inferred, otherwise, it can be specified.
     ///
     /// # Panics
-    /// Panics with the provided message if the original result is `Err`.
+    /// Panics with the provided message if the original result is [Err], using [Result::expect()].
     ///
     /// # Example
     /// ```rust

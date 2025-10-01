@@ -1,13 +1,13 @@
 use crate::internal;
 
-/// Provies postifx helpers for transforming a `Result<T, E>` into `Result<U, E>`
+/// Provies postifx helpers for transforming a [Result<T, E>] into [Result<U, E>]
 pub trait ResultMapTo: internal::Sealed {
     /// The success type.
     type Success;
     /// The error type.
     type Error;
 
-    /// Maps `Result<T, E>` into `Result<U, E>` by substituting `Ok(other)` for the [Err] variant.
+    /// Maps [Result<T, E>] into [Result<U, E>] by substituting Ok(other)` for the [Err] variant.
     ///
     /// Analogous to [Result::map(|_| other)](Result::map), but with a fixed value.
     ///
@@ -26,7 +26,7 @@ pub trait ResultMapTo: internal::Sealed {
     /// ```
     fn map_to<TOther>(self, other: TOther) -> Result<TOther, Self::Error>;
 
-    /// Maps `Result<T, E1>` into `Result<T, E2>` by substituting `Err(other)` for the [Err] variant.
+    /// Maps [Result<T, E1>] into [Result<T, E2>] by substituting `Err(other)` for the [Err] variant.
     ///
     /// Analogous to [Result::map_err(|_| other)](Result::map_err), but with a fixed value.
     ///
