@@ -24,18 +24,20 @@ pub trait OkLog: crate::internal::Sealed {
     /// let some = Ok::<u32, &str>(42).ok_log(Level::INFO, "hello"); // logs nothing
     /// assert!(some.is_some());
     /// ```
-    fn ok_log(self, level: Level, ctx: &str) -> Option<Self::Success>
+    fn ok_log<S>(self, level: Level, ctx: S) -> Option<Self::Success>
     where
-        Self::Error: std::fmt::Debug;
+        Self::Error: std::fmt::Debug,
+        S: AsRef<str>;
 }
 
 impl<T, E> OkLog for Result<T, E> {
     type Success = T;
     type Error = E;
 
-    fn ok_log(self, level: Level, ctx: &str) -> Option<Self::Success>
+    fn ok_log<S>(self, level: Level, ctx: S) -> Option<Self::Success>
     where
         E: std::fmt::Debug,
+        S: AsRef<str>,
     {
         self.tap_err_log(level, ctx).ok()
     }

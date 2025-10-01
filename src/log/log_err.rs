@@ -20,18 +20,20 @@ pub trait LogErr: crate::internal::Sealed {
     /// error.log_err(Level::ERROR, "");          // Logs ERROR: err="oops"
     /// valid.log_err(Level::ERROR, "anything");  // logs nothing
     /// ```
-    fn log_err(self, level: Level, ctx: &str)
+    fn log_err<S>(self, level: Level, ctx: S)
     where
-        Self::Error: std::fmt::Debug;
+        Self::Error: std::fmt::Debug,
+        S: AsRef<str>;
 }
 
 /// Implementation for all [UnitResult].
 impl<E> LogErr for UnitResult<E> {
     type Error = E;
 
-    fn log_err(self, level: tracing::Level, ctx: &str)
+    fn log_err<S>(self, level: tracing::Level, ctx: S)
     where
         E: std::fmt::Debug,
+        S: AsRef<str>,
     {
         _ = self.tap_err_log(level, ctx);
     }
