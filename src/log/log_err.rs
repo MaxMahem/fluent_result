@@ -1,5 +1,5 @@
 use crate::UnitResult;
-use crate::log::{Level, TapLog};
+use crate::log::{Level, ResultTapLog};
 
 /// Provides postfix handlers for [Err] variants of `UnitResult` (Result<(), E>) via logging them with [tracing].
 pub trait LogErr: crate::internal::Sealed {

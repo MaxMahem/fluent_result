@@ -47,7 +47,7 @@ The optional tracing feature enables additional methods for transforming and Res
 `result.ok_log(level, "context")`
 : Transforms a `Result` into an `Option` by logging the `Err` variant at a given level with optional context.
 
-#### tap_log
+#### result_tap_log
 `result.tap_ok_log(level, "context")`
 : Passes through a `Result` while logging any `Err` variant at a given level with optional context.
 `result.tap_err_log(level, "context")`

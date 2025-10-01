@@ -1,7 +1,7 @@
 use crate::log::Level;
 
 /// Provides a postfix method to passthrough and log the [Debug] value [Result] variants with [tracing].
-pub trait TapLog: crate::internal::Sealed {
+pub trait ResultTapLog: crate::internal::Sealed {
     /// The error type of the [Result].
     type Error;
     /// The success type of the [Result].
@@ -44,7 +44,7 @@ pub trait TapLog: crate::internal::Sealed {
         S: AsRef<str>;
 }
 
-impl<T, E> TapLog for Result<T, E> {
+impl<T, E> ResultTapLog for Result<T, E> {
     type Error = E;
     type Success = T;
 
