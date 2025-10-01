@@ -1,7 +1,15 @@
 [package]
-name = "result_utils"
-version = "3.0.0"
+name = "fluent_result"
+version = "0.4.0"
 edition = "2024"
+authors = ["Austin Stanley <maxtmahem@gmail.com>"]
+description = "Fluent postfix helpers for Rust's Result and Option types"
+license = "MIT"
+repository = "https://github.com/maxtmahem/fluent_result"
+# documentation = "https://docs.rs/fluent_result"
+readme = "README.md"
+keywords = ["result", "option", "fluent", "postfix", "error-handling"]
+categories = ["rust-patterns", "development-tools", "data-structures"]
 
 [features]
 default = []
@@ -11,5 +19,6 @@ tracing = ["dep:tracing"]
 tracing = { version = "0.1", optional = true }
 
 [dev-dependencies]
-result_utils = { path = ".", features = ["tracing"] }
+fluent_result = { path = ".", features = ["tracing"] }
+tracing-subscriber = "0.3.20"
 

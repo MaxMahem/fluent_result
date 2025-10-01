@@ -1,5 +1,21 @@
-/// A trait that converts a value into an `Option::Some`.
-pub trait IntoNone {
+/// Provides postfix conversion of any value into an [Option].
+pub trait IntoOption {
+    /// Moves a value into a [Some] variant of [Option].
+    ///
+    /// # Example
+    /// ```rust
+    /// use fluent_result::IntoOption;
+    ///
+    /// let some = 42.into_some();
+    /// assert!(some.is_some());
+    /// ```
+    fn into_some(self) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        Some(self)
+    }
+
     /// Turns a value into [None].
     ///
     /// When used in terminal position, `TOut` can be inferred.
@@ -10,7 +26,7 @@ pub trait IntoNone {
     ///
     /// # Example
     /// ```rust
-    /// use result_utils::into::IntoNone;
+    /// use fluent_result::IntoOption;
     ///
     /// let some: Option<&str> = 42.into_none();
     /// assert!(some.is_none());
@@ -26,8 +42,4 @@ pub trait IntoNone {
     }
 }
 
-impl<T> IntoNone for T {
-    fn into_none<TOut>(self) -> Option<TOut> {
-        None
-    }
-}
+impl<T> IntoOption for T {}

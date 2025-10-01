@@ -1,4 +1,4 @@
-/// A trait for handling [UnitResult<E>] error cases by sinking the error into a side-effecting function.
+/// Provides a postfix helper for handling `UnitResult` [Err] variants by sinking them into a side-effecting function.
 ///
 /// # Type Parameters
 /// - `E`: The error type.
@@ -7,7 +7,7 @@ pub trait HandleErr<E>: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use result_utils::HandleErr;
+    /// use fluent_result::HandleErr;
     ///
     /// let mut captured = None;
     /// Err("oops").handle_err(|e| captured = Some(e));
@@ -19,12 +19,12 @@ pub trait HandleErr<E>: crate::internal::Sealed {
 }
 
 impl<E> HandleErr<E> for crate::UnitResult<E> {
-    fn handle_err<F>(self, function: F)
+    fn handle_err<F>(self, sink: F)
     where
         F: FnOnce(E),
     {
         if let Err(e) = self {
-            function(e);
+            sink(e);
         }
     }
 }

@@ -1,6 +1,6 @@
-use crate::into::IntoOk;
+use crate::into::IntoResult;
 
-/// Extension trait for transforming `Result<T, EIn>`` into `Result<T, EOut>`
+/// Postfix helpers for transforming `Result<T, EIn>` into `Result<T, EOut>`
 /// by unwrapping the inner value and rewrapping it in a new error context.
 ///
 /// This trait is useful when the original error type (`EIn`) is should not be possible,
@@ -9,7 +9,7 @@ use crate::into::IntoOk;
 ///
 /// # Type Parameters
 /// * `T` - The success type.
-pub trait UnwrapOk<T>: crate::internal::Sealed {
+pub trait UnwrapResult<T>: crate::internal::Sealed {
     /// Converts `Result<T, EIn>` into `Result<T, EOut>` by unwrapping the value.
     ///
     /// When the destination type is known, `E` can be inferred, otherwise, it can be specified.
@@ -19,7 +19,7 @@ pub trait UnwrapOk<T>: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// # use result_utils::UnwrapOk;
+    /// # use fluent_result::UnwrapResult;
     /// let result: Result<i32, &str> = Ok(42);
     /// let ok: Result<i32, ()> = result.unwrap_ok();
     /// assert!(ok.is_ok());
@@ -38,7 +38,7 @@ pub trait UnwrapOk<T>: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// # use result_utils::UnwrapOk;
+    /// # use fluent_result::UnwrapResult;
     /// let result: Result<i32, &str> = Ok(42);
     ///
     /// let ok: Result<i32, ()> = result.expect_ok("Expected Ok");
@@ -50,7 +50,7 @@ pub trait UnwrapOk<T>: crate::internal::Sealed {
     fn expect_ok<EOut>(self, msg: &str) -> Result<T, EOut>;
 }
 
-impl<T, EIn: std::fmt::Debug> UnwrapOk<T> for Result<T, EIn> {
+impl<T, EIn: std::fmt::Debug> UnwrapResult<T> for Result<T, EIn> {
     fn unwrap_ok<EOut>(self) -> Result<T, EOut> {
         self.unwrap().into_ok()
     }

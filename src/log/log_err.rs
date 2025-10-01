@@ -1,4 +1,6 @@
-/// A trait for handling [Err] variants of [UnitResult]s (Result<(), E>) by logging them with [tracing].
+use crate::log::{Level, TapLog};
+
+/// Provides postfix handlers for [Err] variants of `UnitResult` (Result<(), E>) via logging them with [tracing].
 pub trait LogErr: crate::internal::Sealed {
     /// The error type.
     type Error;
@@ -7,11 +9,17 @@ pub trait LogErr: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use result_utils::log::LogErr;
+    /// use fluent_result::UnitResult;
+    /// use fluent_result::log::{LogErr, Level};
     ///
-    /// Err("oops").log_err(tracing::Level::ERROR); // Logs at ERROR level
+    /// let error: UnitResult<&str> = Err("oops");
+    /// let valid: UnitResult<&str> = Ok(());
+    ///
+    /// error.log_err(Level::ERROR, "my bad");    // Logs ERROR: ctx="my bad" err="oops"
+    /// error.log_err(Level::ERROR, "");          // Logs ERROR: err="oops"
+    /// valid.log_err(Level::ERROR, "anything");  // logs nothing
     /// ```
-    fn log_err(self, level: tracing::Level)
+    fn log_err(self, level: Level, ctx: &str)
     where
         Self::Error: std::fmt::Debug;
 }
@@ -20,16 +28,10 @@ pub trait LogErr: crate::internal::Sealed {
 impl<E> LogErr for crate::UnitResult<E> {
     type Error = E;
 
-    fn log_err(self, level: tracing::Level)
+    fn log_err(self, level: tracing::Level, ctx: &str)
     where
         E: std::fmt::Debug,
     {
-        match level {
-            tracing::Level::ERROR => _ = self.inspect_err(|e| tracing::error!(error = ?e)),
-            tracing::Level::WARN => _ = self.inspect_err(|e| tracing::warn!(error = ?e)),
-            tracing::Level::INFO => _ = self.inspect_err(|e| tracing::info!(error = ?e)),
-            tracing::Level::DEBUG => _ = self.inspect_err(|e| tracing::debug!(error = ?e)),
-            tracing::Level::TRACE => _ = self.inspect_err(|e| tracing::trace!(error = ?e)),
-        }
+        _ = self.tap_err_log(level, ctx);
     }
 }

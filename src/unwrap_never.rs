@@ -1,4 +1,4 @@
-/// A trait for unwrapping the [Ok] varaint of an [InfallibleResult] with better expressed intentionality.
+/// A trait for unwrapping the [Ok] varaint of an `InfallibleResult`, panic free.
 ///
 /// # Type Parameters
 /// - `T`: The success type.
@@ -21,7 +21,7 @@ pub trait UnwrapNever<T>: crate::internal::Sealed {
     ///
     /// ```rust
     /// # use std::convert::Infallible;
-    /// # use result_utils::UnwrapNever;
+    /// # use fluent_result::UnwrapNever;
     /// let result: Result<u32, Infallible> = Ok(42);
     /// let value = result.unwrap_never();
     /// assert_eq!(value, 42);

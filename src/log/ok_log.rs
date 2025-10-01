@@ -1,4 +1,6 @@
-/// Extension trait for transforming `Result<T, E>` into `Option<T>` by logging the [Err] variant with [tracing].
+use crate::log::{Level, TapLog};
+
+/// Provides postfix helpers for transforming `Result<T, E>` into `Option<T>` by logging the [Err] variant with [tracing].
 pub trait OkLog: crate::internal::Sealed {
     /// The type of the success value.
     type Success;
@@ -6,16 +8,23 @@ pub trait OkLog: crate::internal::Sealed {
     /// The type of the error value.
     type Error;
 
-    /// Transform `Result<T, E>` into `Option<T>` by logging the [Debug] value of [Err] variants at 'Level::ERROR'.
+    /// Transform `Result<T, E>` into `Option<T>` by logging the [Debug] value of [Err] variants at the specified `tracing::Level`
+    /// with a contextual message (`ctx`). If `ctx` is empty, then it is omitted.
     ///
     /// # Example
     /// ```rust
-    /// use result_utils::log::OkLog;
+    /// use fluent_result::log::{OkLog, Level};
     ///
-    /// let result: Result<u32, &str> = Ok(42);
-    /// let some = result.ok_log();
+    /// let none: Option<u32> = Err(42).ok_log(Level::INFO, "hello"); // logs "INFO ctx=hello err=42"
+    /// assert!(none.is_none());
+    ///
+    /// let none: Option<u32> = Err(42).ok_log(Level::INFO, ""); // logs "INFO err=42"
+    /// assert!(none.is_none());
+    ///
+    /// let some = Ok::<u32, &str>(42).ok_log(Level::INFO, "hello"); // logs nothing
     /// assert!(some.is_some());
-    fn ok_log(self) -> Option<Self::Success>
+    /// ```
+    fn ok_log(self, level: Level, ctx: &str) -> Option<Self::Success>
     where
         Self::Error: std::fmt::Debug;
 }
@@ -24,10 +33,10 @@ impl<T, E> OkLog for Result<T, E> {
     type Success = T;
     type Error = E;
 
-    fn ok_log(self) -> Option<Self::Success>
+    fn ok_log(self, level: Level, ctx: &str) -> Option<Self::Success>
     where
         E: std::fmt::Debug,
     {
-        self.inspect_err(|e| tracing::error!(err = ?e)).ok()
+        self.tap_err_log(level, ctx).ok()
     }
 }
