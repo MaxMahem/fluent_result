@@ -2,7 +2,7 @@ name: Docs
 on:
   workflow_dispatch:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "main" ]
 permissions:
   contents: read
   pages: write
@@ -29,7 +29,7 @@ jobs:
       - name: Build docs
         run: cargo doc --no-deps
       - name: Add redirect
-        run: echo '<meta http-equiv="refresh" content="0;url=result_utils/index.html">' > target/doc/index.html
+        run: echo '<meta http-equiv="refresh" content="0;url=fluent_result/index.html">' > target/doc/index.html
       - name: Remove lock file
         run: rm target/doc/.lock
       - name: Upload artifact
