@@ -14,7 +14,7 @@ pub trait ResultTapLog: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::log::{TapLog, Level};
+    /// use fluent_result::log::{ResultTapLog, Level};
     ///
     /// let result: Result<u32, u32> = Ok(42).tap_ok_log(Level::INFO, "hello"); // logs "INFO ctx=hello ok=42"
     /// let result: Result<u32, u32> = Ok(42).tap_ok_log(Level::INFO, "");      // logs "INFO ok=42"
@@ -32,7 +32,7 @@ pub trait ResultTapLog: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::log::{TapLog, Level};
+    /// use fluent_result::log::{ResultTapLog, Level};
     ///
     /// let result: Result<u32, u32> = Err(42).tap_err_log(Level::INFO, "hello"); // logs "INFO ctx=hello err=42"
     /// let result: Result<u32, u32> = Err(42).tap_err_log(Level::INFO, "");      // logs "INFO err=42"
@@ -41,6 +41,25 @@ pub trait ResultTapLog: crate::internal::Sealed {
     fn tap_err_log<S>(self, level: tracing::Level, ctx: S) -> Self
     where
         Self::Error: std::fmt::Debug,
+        S: AsRef<str>;
+
+    /// Logs the [Debug] value of the [Ok] or [Err] variant of [Result] (if any) at the specified `tracing::Level`
+    /// with a contextual message (`ctx`). If `ctx` is empty, then it is omitted. Returns self unchanged.
+    ///
+    /// This method is useful for logging values in method chains or pipelines without disrupting flow.
+    ///
+    /// # Example
+    /// ```rust
+    /// use fluent_result::log::{ResultTapLog, Level};
+    ///
+    /// let result: Result<u32, u32> = Ok(42).tap_result_log(Level::INFO, Level::ERROR, "hello"); // logs "INFO ctx=hello ok=42"
+    /// let result: Result<u32, u32> = Ok(42).tap_result_log(Level::INFO, Level::ERROR, "");      // logs "INFO ok=42"
+    /// let result: Result<u32, u32> = Err(42).tap_result_log(Level::INFO, Level::ERROR, "");     // logs "ERROR err=42"
+    /// ```
+    fn tap_result_log<S>(self, ok_level: Level, err_level: Level, ctx: S) -> Self
+    where
+        Self::Error: std::fmt::Debug,
+        Self::Success: std::fmt::Debug,
         S: AsRef<str>;
 }
 
@@ -53,19 +72,22 @@ impl<T, E> ResultTapLog for Result<T, E> {
         T: std::fmt::Debug,
         S: AsRef<str>,
     {
-        match (ctx.as_ref(), level) {
-            ("", Level::ERROR) => self.inspect(|t| tracing::error!(ok = ?t)),
-            ("", Level::WARN) => self.inspect(|t| tracing::warn!(ok = ?t)),
-            ("", Level::INFO) => self.inspect(|t| tracing::info!(ok = ?t)),
-            ("", Level::DEBUG) => self.inspect(|t| tracing::debug!(ok = ?t)),
-            ("", Level::TRACE) => self.inspect(|t| tracing::trace!(ok = ?t)),
+        if let Ok(ref ok) = self {
+            match (ctx.as_ref(), level) {
+                ("", Level::ERROR) => tracing::error!(?ok),
+                ("", Level::WARN) => tracing::warn!(?ok),
+                ("", Level::INFO) => tracing::info!(?ok),
+                ("", Level::DEBUG) => tracing::debug!(?ok),
+                ("", Level::TRACE) => tracing::trace!(?ok),
 
-            (ctx, Level::ERROR) => self.inspect(|t| tracing::error!(%ctx, ok = ?t)),
-            (ctx, Level::WARN) => self.inspect(|t| tracing::warn!(%ctx, ok = ?t)),
-            (ctx, Level::INFO) => self.inspect(|t| tracing::info!(%ctx, ok = ?t)),
-            (ctx, Level::DEBUG) => self.inspect(|t| tracing::debug!(%ctx, ok = ?t)),
-            (ctx, Level::TRACE) => self.inspect(|t| tracing::trace!(%ctx, ok = ?t)),
-        }
+                (ctx, Level::ERROR) => tracing::error!(%ctx, ?ok),
+                (ctx, Level::WARN) => tracing::warn!(%ctx, ?ok),
+                (ctx, Level::INFO) => tracing::info!(%ctx, ?ok),
+                (ctx, Level::DEBUG) => tracing::debug!(%ctx, ?ok),
+                (ctx, Level::TRACE) => tracing::trace!(%ctx, ?ok),
+            }
+        };
+        self
     }
 
     fn tap_err_log<S>(self, level: tracing::Level, ctx: S) -> Self
@@ -73,18 +95,33 @@ impl<T, E> ResultTapLog for Result<T, E> {
         E: std::fmt::Debug,
         S: AsRef<str>,
     {
-        match (ctx.as_ref(), level) {
-            ("", Level::ERROR) => self.inspect_err(|e| tracing::error!(err = ?e)),
-            ("", Level::WARN) => self.inspect_err(|e| tracing::warn!(err = ?e)),
-            ("", Level::INFO) => self.inspect_err(|e| tracing::info!(err = ?e)),
-            ("", Level::DEBUG) => self.inspect_err(|e| tracing::debug!(err = ?e)),
-            ("", Level::TRACE) => self.inspect_err(|e| tracing::trace!(err = ?e)),
+        if let Err(ref err) = self {
+            match (ctx.as_ref(), level) {
+                ("", Level::ERROR) => tracing::error!(?err),
+                ("", Level::WARN) => tracing::warn!(?err),
+                ("", Level::INFO) => tracing::info!(?err),
+                ("", Level::DEBUG) => tracing::debug!(?err),
+                ("", Level::TRACE) => tracing::trace!(?err),
 
-            (ctx, Level::ERROR) => self.inspect_err(|e| tracing::error!(%ctx, err = ?e)),
-            (ctx, Level::WARN) => self.inspect_err(|e| tracing::warn!(%ctx, err = ?e)),
-            (ctx, Level::INFO) => self.inspect_err(|e| tracing::info!(%ctx, err = ?e)),
-            (ctx, Level::DEBUG) => self.inspect_err(|e| tracing::debug!(%ctx, err = ?e)),
-            (ctx, Level::TRACE) => self.inspect_err(|e| tracing::trace!(%ctx, err = ?e)),
+                (ctx, Level::ERROR) => tracing::error!(%ctx, ?err),
+                (ctx, Level::WARN) => tracing::warn!(%ctx, ?err),
+                (ctx, Level::INFO) => tracing::info!(%ctx, ?err),
+                (ctx, Level::DEBUG) => tracing::debug!(%ctx, ?err),
+                (ctx, Level::TRACE) => tracing::trace!(%ctx, ?err),
+            }
+        };
+        self
+    }
+
+    fn tap_result_log<S>(self, ok_level: Level, err_level: Level, ctx: S) -> Self
+    where
+        E: std::fmt::Debug,
+        T: std::fmt::Debug,
+        S: AsRef<str>,
+    {
+        match self {
+            Ok(_) => self.tap_ok_log(ok_level, ctx),
+            Err(_) => self.tap_err_log(err_level, ctx),
         }
     }
 }

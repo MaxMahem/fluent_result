@@ -1,6 +1,6 @@
 [package]
 name = "fluent_result"
-version = "0.4.0"
+version = "0.4.1"
 edition = "2024"
 authors = ["Austin Stanley <maxtmahem@gmail.com>"]
 description = "Fluent postfix helpers for Rust's Result and Option types"
