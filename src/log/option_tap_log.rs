@@ -29,10 +29,10 @@ pub trait OptionTapLog: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::log::{ResultTapLog, Level};
+    /// use fluent_result::log::{OptionTapLog, Level};
     ///
     /// let option: Option<u32> = None.tap_none_log(Level::INFO, "hello");   // logs "INFO msg=hello"
-    /// let option: Option<u32> = Some(42).tap_err_log(Level::INFO, "");     // logs nothing
+    /// let option: Option<u32> = Some(42).tap_none_log(Level::INFO, "");     // logs nothing
     /// ```
     fn tap_none_log<S: AsRef<str>>(self, level: tracing::Level, msg: S) -> Self;
 }
