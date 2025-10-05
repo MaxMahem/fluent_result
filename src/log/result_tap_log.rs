@@ -1,16 +1,16 @@
 use crate::log::Level;
 
-/// Provides a postfix method to passthrough and log the [Debug] value [Result] variants with [tracing].
+/// Provides a postfix method to passthrough and log the [Debug] value [Result] variants with
+/// [tracing].
 pub trait ResultTapLog: crate::internal::Sealed {
     /// The error type of the [Result].
     type Error;
     /// The success type of the [Result].
     type Success;
 
-    /// Logs the [Debug] value of the [Ok] variant of [Result] (if any) at the specified `tracing::Level`
-    /// with a contextual message (`ctx`). If `ctx` is empty, then it is omitted. Returns self unchanged.
-    ///
-    /// This method is useful for logging values in method chains or pipelines without disrupting flow.
+    /// Logs the [Debug] value of the [Ok] variant of [Result] (if any) at the specified
+    /// `tracing::Level` with a contextual message (`ctx`). If `ctx` is empty, then it is omitted.
+    /// Returns self unchanged.
     ///
     /// # Example
     /// ```rust
@@ -25,10 +25,8 @@ pub trait ResultTapLog: crate::internal::Sealed {
         Self::Success: std::fmt::Debug,
         S: AsRef<str>;
 
-    /// Logs the [Debug] value of the [Err] variant of [Result] (if any) at the specified `tracing::Level`
-    /// with a contextual message (`ctx`). If `ctx` is empty, then it is omitted. Returns self unchanged.
-    ///
-    /// This method is useful for logging values in method chains or pipelines without disrupting flow.
+    /// Logs the [Debug] value of the [Err] variant of [Result] (if any) at the specified
+    /// `tracing::Level` with a context message (`ctx`). If `ctx` is empty, then it is omitted.
     ///
     /// # Example
     /// ```rust
@@ -43,10 +41,9 @@ pub trait ResultTapLog: crate::internal::Sealed {
         Self::Error: std::fmt::Debug,
         S: AsRef<str>;
 
-    /// Logs the [Debug] value of the [Ok] or [Err] variant of [Result] (if any) at the specified `tracing::Level`
-    /// with a contextual message (`ctx`). If `ctx` is empty, then it is omitted. Returns self unchanged.
-    ///
-    /// This method is useful for logging values in method chains or pipelines without disrupting flow.
+    /// Logs the [Debug] value of the [Ok] or [Err] variant of [Result] (if any) at the specified
+    /// `tracing::Level` with a context message (`ctx`). If `ctx` is empty, then it is omitted.
+    /// Returns self unchanged.
     ///
     /// # Example
     /// ```rust
