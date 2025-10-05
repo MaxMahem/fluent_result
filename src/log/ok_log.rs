@@ -1,4 +1,4 @@
-use crate::log::{Level, ResultTapLog};
+use crate::log::{Level, TapResultLog};
 
 /// Provides postfix helpers for transforming [Result<T, E>] into `Option<T>` by logging the [Err] variant with [tracing].
 pub trait OkLog: crate::internal::Sealed {

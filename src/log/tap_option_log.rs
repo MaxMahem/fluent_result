@@ -1,7 +1,7 @@
 use crate::log::Level;
 
 /// Provides a postfix method to passthrough and log the [Debug] value of [Option] variants with [tracing].
-pub trait OptionTapLog: crate::internal::Sealed {
+pub trait TapOptionLog: crate::internal::Sealed {
     /// The type of the [Some] value.
     type Some;
 
@@ -12,7 +12,7 @@ pub trait OptionTapLog: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::log::{OptionTapLog, Level};
+    /// use fluent_result::log::{TapOptionLog, Level};
     ///
     /// let option: Option<u32> = Some(42).tap_some_log(Level::INFO, "hello");  // logs "INFO ctx=hello ok=42"
     /// let option: Option<u32> = Some(42).tap_some_log(Level::INFO, "");       // logs "INFO ok=42"
@@ -29,7 +29,7 @@ pub trait OptionTapLog: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::log::{OptionTapLog, Level};
+    /// use fluent_result::log::{TapOptionLog, Level};
     ///
     /// let option: Option<u32> = None.tap_none_log(Level::INFO, "hello");   // logs "INFO msg=hello"
     /// let option: Option<u32> = Some(42).tap_none_log(Level::INFO, "");     // logs nothing
@@ -37,7 +37,7 @@ pub trait OptionTapLog: crate::internal::Sealed {
     fn tap_none_log<S: AsRef<str>>(self, level: tracing::Level, msg: S) -> Self;
 }
 
-impl<T> OptionTapLog for Option<T> {
+impl<T> TapOptionLog for Option<T> {
     type Some = T;
 
     fn tap_some_log<S>(self, level: tracing::Level, ctx: S) -> Self

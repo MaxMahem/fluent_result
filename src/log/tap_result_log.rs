@@ -2,7 +2,7 @@ use crate::log::Level;
 
 /// Provides a postfix method to passthrough and log the [Debug] value [Result] variants with
 /// [tracing].
-pub trait ResultTapLog: crate::internal::Sealed {
+pub trait TapResultLog: crate::internal::Sealed {
     /// The error type of the [Result].
     type Error;
     /// The success type of the [Result].
@@ -14,7 +14,7 @@ pub trait ResultTapLog: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::log::{ResultTapLog, Level};
+    /// use fluent_result::log::{TapResultLog, Level};
     ///
     /// let result: Result<u32, u32> = Ok(42).tap_ok_log(Level::INFO, "hello"); // logs "INFO ctx=hello ok=42"
     /// let result: Result<u32, u32> = Ok(42).tap_ok_log(Level::INFO, "");      // logs "INFO ok=42"
@@ -30,7 +30,7 @@ pub trait ResultTapLog: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::log::{ResultTapLog, Level};
+    /// use fluent_result::log::{TapResultLog, Level};
     ///
     /// let result: Result<u32, u32> = Err(42).tap_err_log(Level::INFO, "hello"); // logs "INFO ctx=hello err=42"
     /// let result: Result<u32, u32> = Err(42).tap_err_log(Level::INFO, "");      // logs "INFO err=42"
@@ -47,7 +47,7 @@ pub trait ResultTapLog: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::log::{ResultTapLog, Level};
+    /// use fluent_result::log::{TapResultLog, Level};
     ///
     /// let result: Result<u32, u32> = Ok(42).tap_result_log(Level::INFO, Level::ERROR, "hello"); // logs "INFO ctx=hello ok=42"
     /// let result: Result<u32, u32> = Ok(42).tap_result_log(Level::INFO, Level::ERROR, "");      // logs "INFO ok=42"
@@ -60,7 +60,7 @@ pub trait ResultTapLog: crate::internal::Sealed {
         S: AsRef<str>;
 }
 
-impl<T, E> ResultTapLog for Result<T, E> {
+impl<T, E> TapResultLog for Result<T, E> {
     type Error = E;
     type Success = T;
 
