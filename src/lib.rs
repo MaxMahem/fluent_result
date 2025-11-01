@@ -3,6 +3,7 @@
 mod handle_err;
 mod into;
 mod map;
+mod sink;
 mod unwrap_never;
 mod unwrap_result;
 
@@ -13,6 +14,7 @@ pub mod log;
 pub use handle_err::HandleErr;
 pub use into::{IntoOption, IntoResult};
 pub use map::{OptionMapTo, ResultMapTo};
+pub use sink::Sink;
 pub use unwrap_never::UnwrapNever;
 pub use unwrap_result::UnwrapResult;
 
