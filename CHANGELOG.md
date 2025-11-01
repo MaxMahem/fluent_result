@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `Sink` trait
+- Added `ThenNone` trait - for transforming a `bool` into an `None` when true
 
 ### Removed
 

@@ -1,4 +1,5 @@
 #![doc = include_str!("../README.md")]
+pub mod then_none;
 
 mod into;
 mod map;
