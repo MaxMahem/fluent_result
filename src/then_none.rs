@@ -1,5 +1,6 @@
 use crate::internal;
 
+/// An extension trait for [`bool`] that transforms `true` into [`None`].
 pub trait ThenNone: internal::Sealed {
     /// Returns [`None`] if the [`bool`] value is `true`, and [`Some(())`](Some) otherwise.
     ///

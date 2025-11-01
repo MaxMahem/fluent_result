@@ -1,13 +1,13 @@
-/// A postfix helper extension for handling [`Some`] variants by sinking them into a side-effecting function.
-///
-/// # Type Parameters
-/// - `T`: The option type.
-pub trait Sink<T>: crate::internal::Sealed {
+use crate::internal::Sealed;
+
+/// An extension for handling [`Some`] variants by sinking them into a side-effecting function.
+pub trait SinkOption<T>: Sealed {
     /// Handles [`Some`] variants of [`Option`]s by sinking them into `sink`.
     ///
     /// # Example
+    ///
     /// ```rust
-    /// use fluent_result::Sink;
+    /// use fluent_result::SinkOption;
     ///
     /// let mut log = String::new();
     /// Some("oops").sink(|e| log.push_str(e));
@@ -18,7 +18,7 @@ pub trait Sink<T>: crate::internal::Sealed {
         F: FnOnce(T);
 }
 
-impl<T> Sink<T> for Option<T> {
+impl<T> SinkOption<T> for Option<T> {
     fn sink<F>(self, sink: F)
     where
         F: FnOnce(T),
@@ -26,5 +26,17 @@ impl<T> Sink<T> for Option<T> {
         if let Some(e) = self {
             sink(e);
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn sink() {
+        let mut log = String::new();
+        Some("oops").sink(|e| log.push_str(e));
+        assert_eq!(log, "oops");
     }
 }

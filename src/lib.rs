@@ -12,7 +12,7 @@ pub mod log;
 
 pub use into::{IntoOption, IntoResult};
 pub use map::{OptionMapTo, ResultMapTo};
-pub use sink::Sink;
+pub use sink::{SinkOption, SinkResult};
 pub use then_none::ThenNone;
 pub use unwrap_never::UnwrapNever;
 
