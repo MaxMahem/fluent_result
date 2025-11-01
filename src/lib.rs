@@ -4,7 +4,6 @@ mod into;
 mod map;
 mod sink;
 mod unwrap_never;
-mod unwrap_result;
 
 #[cfg(feature = "tracing")]
 /// Provides traits for transforming and manipulating [Result] and [Option] variants with `tracing`.
@@ -14,7 +13,6 @@ pub use into::{IntoOption, IntoResult};
 pub use map::{OptionMapTo, ResultMapTo};
 pub use sink::Sink;
 pub use unwrap_never::UnwrapNever;
-pub use unwrap_result::UnwrapResult;
 
 /// A [Result] type with a unit `()` success type and variable error type.
 ///

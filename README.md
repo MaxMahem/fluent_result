@@ -30,12 +30,6 @@ A compact crate offering a suite of ergonomic postfix helpers for manipulating a
 `infalliable_result.unwrap_never()`
 : Unwraps the `Ok` variant of an `InfalliableResult<T>` without possibility of panic.
 
-#### unwrap_result
-`result.unwrap_ok()`
-: Transforms a `Result<T, E1>` to a `Result<T, E2>` by unwrapping the success variant and rewrapping, panicing if there is an `Err` variant.
-`result.expect_ok(msg)`
-: Transforms a `Result<T, E1>` to a `Result<T, E2>` by unwrapping the success variant and rewrapping, panicing with `msg` if there is an `Err` variant.
-
 ### Feature Tracing Traits
 The optional tracing feature enables additional methods for transforming and Result and Option types via logging there error variants.
 
