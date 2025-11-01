@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Configure cache
@@ -29,11 +29,11 @@ jobs:
       - name: Build docs
         run: cargo doc --no-deps --all-features
       - name: Add redirect
-        run: echo '<meta http-equiv="refresh" content="0;url=fluent_result/index.html">' > target/doc/index.html
+        run: echo '<meta http-equiv="refresh" content="0;url=display_as_debug/index.html">' > target/doc/index.html
       - name: Remove lock file
         run: rm target/doc/.lock
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: target/doc
   deploy:
