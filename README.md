@@ -1,4 +1,10 @@
 # Fluent_Result
+
+[![Build](https://github.com/MaxMahem/fluent_result/actions/workflows/build.yml/badge.svg)](https://github.com/MaxMahem/fluent_result/actions/workflows/build.yml)
+[![Docs](https://github.com/MaxMahem/fluent_result/actions/workflows/docs.yml/badge.svg)](https://MaxMahem.github.io/fluent_result/fluent_result/index.html)
+[![dependency status](https://deps.rs/repo/github/MaxMahem/fluent_result/status.svg)](https://deps.rs/repo/github/MaxMahem/fluent_result)
+![GitHub License](https://img.shields.io/github/license/MaxMahem/fluent_result)
+
 A compact crate offering a suite of ergonomic postfix helpers for manipulating and transforming Result and Option types fluently.
 
 ### Provided Traits
