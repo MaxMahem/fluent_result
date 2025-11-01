@@ -22,9 +22,9 @@ A compact crate offering a suite of ergonomic postfix helpers for manipulating a
 `result.map_err_to(error)`
 : Transform `Result<T, E1>` to `Result<T, E2>`
 
-#### handle_err
-`unit_result.handle_err(sink)` 
-: Handles the `Err` variant of a `UnitResult<E>` by sinking it into `sink`. Returns `()`.
+#### sink
+`option.sink(sink)` 
+: Handles the `Some` variant of a `Option<T>` by sinking it into `sink`. Returns `()`.
 
 #### unwrap_never
 `infalliable_result.unwrap_never()`
