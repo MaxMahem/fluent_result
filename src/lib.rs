@@ -1,9 +1,9 @@
 #![doc = include_str!("../README.md")]
-pub mod then_none;
 
 mod into;
 mod map;
 mod sink;
+mod then_none;
 mod unwrap_never;
 
 #[cfg(feature = "tracing")]
@@ -13,6 +13,7 @@ pub mod log;
 pub use into::{IntoOption, IntoResult};
 pub use map::{OptionMapTo, ResultMapTo};
 pub use sink::Sink;
+pub use then_none::ThenNone;
 pub use unwrap_never::UnwrapNever;
 
 /// A [Result] type with a unit `()` success type and variable error type.

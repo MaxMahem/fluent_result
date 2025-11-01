@@ -7,7 +7,7 @@ pub trait Sink<T>: crate::internal::Sealed {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::HandleSome;
+    /// use fluent_result::Sink;
     ///
     /// let mut log = String::new();
     /// Some("oops").sink(|e| log.push_str(e));

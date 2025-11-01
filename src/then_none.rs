@@ -9,10 +9,10 @@ pub trait ThenNone: internal::Sealed {
     /// # Example
     ///
     /// ```rust
-    /// use fluent_result::then_none;
+    /// use fluent_result::ThenNone;
     ///
     /// fn filter_even_numbers(number: u32) -> Option<u32> {
-    ///     (number % 2 == 0).then_none()?
+    ///     (number % 2 == 0).then_none()?;
     ///     Some(number)
     /// }
     ///
