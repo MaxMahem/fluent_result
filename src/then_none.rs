@@ -29,3 +29,14 @@ impl ThenNone for bool {
         if self { None } else { Some(()) }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_then_none() {
+        assert_eq!(true.then_none(), None);
+        assert_eq!(false.then_none(), Some(()));
+    }
+}

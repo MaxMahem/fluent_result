@@ -53,3 +53,20 @@ pub trait IntoResult {
 /// # Type Parameters
 /// - `T`: The success type to use in the `Result`.
 impl<T> IntoResult for T {}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn into_ok() {
+        let ok: Result<u32, ()> = 42.into_ok();
+        assert_eq!(ok, Ok(42));
+    }
+
+    #[test]
+    fn into_err() {
+        let err = "error".into_err::<()>();
+        assert_eq!(err, Err("error"));
+    }
+}
