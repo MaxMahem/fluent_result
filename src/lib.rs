@@ -1,6 +1,5 @@
 #![doc = include_str!("../README.md")]
 
-mod handle_err;
 mod into;
 mod map;
 mod sink;
@@ -11,7 +10,6 @@ mod unwrap_result;
 /// Provides traits for transforming and manipulating [Result] and [Option] variants with `tracing`.
 pub mod log;
 
-pub use handle_err::HandleErr;
 pub use into::{IntoOption, IntoResult};
 pub use map::{OptionMapTo, ResultMapTo};
 pub use sink::Sink;
