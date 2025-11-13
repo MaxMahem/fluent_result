@@ -5,51 +5,70 @@
 [![dependency status](https://deps.rs/repo/github/MaxMahem/fluent_result/status.svg)](https://deps.rs/repo/github/MaxMahem/fluent_result)
 ![GitHub License](https://img.shields.io/github/license/MaxMahem/fluent_result)
 
-A compact crate offering a suite of ergonomic postfix helpers for manipulating and transforming Result and Option types fluently.
+A compact crate offering a suite of extensions providing helpers for manipulating and transforming `Result` and `Option` types fluently,as well as transforming types into `Result` and `Option` types.
 
-### Provided Traits
-#### into_option
-`value.into_option()`
-: Transform any value into a `Some`
+## Provided Traits
+### IntoOption
+Wrap any value in a `Option`. This is equivalent to `Some(value)` and `None`, but may be more readable in long chains.
 
-#### into_result
-`value.into_ok()` 
-: Transform any value into an `Ok`
-`error.into_err()` 
-: Transform any value into an `Err`
+```rust
+use fluent_result::IntoOption;
 
-#### option_map_to
-`option.map_to(value)`
-: Transform `Option<T>` to `Option<U>`
+let some = 42.into_some();
+assert_eq!(Some(42), some);
 
-#### result_map_to
-`result.map_to(value)`
-: Transform `Result<T, E>` to `Result<U, E>`
-`result.map_err_to(error)`
-: Transform `Result<T, E1>` to `Result<T, E2>`
+// Typically less useful, but included for completeness. 
+let none = 42.into_none::<u8>();
+assert_eq!(None, none);
+```
 
-#### sink
-`option.sink(sink)` 
-: Handles the `Some` variant of a `Option<T>` by sinking it into `sink`. Returns `()`.
+### IntoResult
+Wrap any value in a `Result`. This is equivalent to `Ok(value)` and `Err(value)`, but may be more readable in long chains.
 
-#### unwrap_never
-`infalliable_result.unwrap_never()`
-: Unwraps the `Ok` variant of an `InfalliableResult<T>` without possibility of panic.
+```rust
+use fluent_result::IntoResult;
 
-### Feature Tracing Traits
-The optional tracing feature enables additional methods for transforming and Result and Option types via logging there error variants.
+// if necessary, the error type can be specified
+let ok = 42.into_ok::<&str>();
+assert_eq!(Ok(42), ok);
 
-#### log_err
-`unit_result.log_err(level, "context")`
-: Handles the `Err` variant of a `UnitResult<E>` by logging it at a given level with option context with tracing. Returns `()`.
+// likewise the ok type can be specified
+let err = 42.into_err::<&str>();
+assert_eq!(Err(42), err);
+```
 
-#### ok_log
-`result.ok_log(level, "context")`
-: Transforms a `Result` into an `Option` by logging the `Err` variant at a given level with optional context.
+### Sink
+Handle a variant of a `Result` or `Option` by sinking it into a `Sink`. 
 
-#### result_tap_log
-`result.tap_ok_log(level, "context")`
-: Passes through a `Result` while logging any `Err` variant at a given level with optional context.
-`result.tap_err_log(level, "context")`
-: Passes through a `Result` while logging any `Ok` variant at a given level with optional context.
+This is useful for handling a variant by sinking it into a side-effecting function, for example logging. Especially useful for methods that return `Result<(), E>` for example.
 
+See the documentation for brief examples.
+
+### ThenNone
+Transforms `true` into `None` and `false` into `Some(())`.
+
+This is useful for ergonomically transforming boolean guards in methods that return `Option<T>`.
+
+```rust
+use fluent_result::ThenNone;
+
+fn foo(number: u32) -> Option<u32> {
+    // guard
+    (number % 2 == 0).then_none()?;
+
+    // do some more work.
+
+    Some(number)
+}
+```
+
+### ExpectNone
+Unwraps the `None` variant of an `Option<T>`. This is useful for validating methods that *should* return `None` but may return `Some` in some cases. For example, when inserting a key value pair that should be unique into a hashmap.
+
+```rust
+use std::collections::HashMap;
+use fluent_result::ExpectNone;
+
+let mut map = HashMap::new();
+map.insert("key", "value").expect_none("key already exists");
+```

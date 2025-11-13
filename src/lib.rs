@@ -1,5 +1,5 @@
 #![doc = include_str!("../README.md")]
-
+mod expect_none;
 mod into;
 mod map;
 mod sink;
@@ -10,6 +10,7 @@ mod unwrap_never;
 /// Provides traits for transforming and manipulating [Result] and [Option] variants with `tracing`.
 pub mod log;
 
+pub use expect_none::ExpectNone;
 pub use into::{IntoOption, IntoResult};
 pub use map::{OptionMapTo, ResultMapTo};
 pub use sink::{SinkOption, SinkResult};

@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [0.6.1] - 10/31/2025
+## [0.6.2] - 2025/11/13
+
+### Added
+
+- Added `ExpectNone` trait, for unwrapping a `None` variant
+
+## [0.6.1] - 2025/10/31
 
 ### Added
 
@@ -19,6 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed `HandleError` trait. `Result` errors can be handled via `result.ok().sink(sink_fn)` or `result.err().sink(sink_fn)`
 - Removed `UnwrapResult` trait. `Result` errors can be transformed via `result.unwrap().into_ok()` or `result.expect(msg).into_ok()`. `into_ok` can take a type parameter to specify the error type, if necessary.
 
-## [0.5.0] - 10/31/2025
+## [0.5.0] - 2025/10/31
 
 Started change tracking
