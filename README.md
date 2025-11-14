@@ -44,13 +44,14 @@ This is useful for handling a variant by sinking it into a side-effecting functi
 
 See the documentation for brief examples.
 
-### ThenNone
-Transforms `true` into `None` and `false` into `Some(())`.
+### ThenNone and ThenErr
+Transforms `true` into `None` or `Err`, and `false` into `Some(())` or `Ok(())`.
 
-This is useful for ergonomically transforming boolean guards in methods that return `Option<T>`.
+This is useful for ergonomically transforming boolean guards in methods that return `Option<T>` or `Result<T, E>`.
 
 ```rust
 use fluent_result::ThenNone;
+use fluent_result::ThenErr;
 
 fn foo(number: u32) -> Option<u32> {
     // guard
@@ -60,6 +61,18 @@ fn foo(number: u32) -> Option<u32> {
 
     Some(number)
 }
+assert_eq!(None, foo(2));
+
+
+fn bar(number: u32) -> Result<u32, String> {
+    // guard
+    (number % 2 == 0).then_err("number is even")?;
+
+    // do some more work.
+
+    Ok(number)
+}
+assert_eq!(Err("number is even".to_string()), bar(2));
 ```
 
 ### ExpectNone

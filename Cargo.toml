@@ -1,10 +1,10 @@
 [package]
 name = "fluent_result"
-version = "0.6.2"
+version = "0.6.3"
 edition = "2024"
 authors = ["Austin Stanley <maxtmahem@gmail.com>"]
 description = "Fluent postfix helpers for Rust's Result and Option types"
-license = "MIT"
+license = "MIT OR Apache-2.0"
 repository = "https://github.com/maxtmahem/fluent_result"
 documentation = "https://maxmahem.github.io/fluent_result/fluent_result/index.html"
 readme = "README.md"

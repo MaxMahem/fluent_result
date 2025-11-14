@@ -1,20 +1,20 @@
 #![doc = include_str!("../README.md")]
+mod bool;
 mod expect_none;
 mod into;
 mod map;
 mod sink;
-mod then_none;
 mod unwrap_never;
 
 #[cfg(feature = "tracing")]
 /// Provides traits for transforming and manipulating [Result] and [Option] variants with `tracing`.
 pub mod log;
 
+pub use bool::{ThenErr, ThenNone};
 pub use expect_none::ExpectNone;
 pub use into::{IntoOption, IntoResult};
 pub use map::{OptionMapTo, ResultMapTo};
 pub use sink::{SinkOption, SinkResult};
-pub use then_none::ThenNone;
 pub use unwrap_never::UnwrapNever;
 
 /// A [Result] type with a unit `()` success type and variable error type.
