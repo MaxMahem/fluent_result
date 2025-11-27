@@ -3,9 +3,9 @@
 #![warn(clippy::cargo)]
 #![warn(missing_docs)]
 
-
 /// Boolean extension traits for converting to [`Result`] and [`Option`] types.
 pub mod bool;
+
 mod expect_none;
 mod into;
 mod nested;

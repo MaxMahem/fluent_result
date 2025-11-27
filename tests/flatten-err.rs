@@ -38,7 +38,7 @@ fn nested_error_display_outer() {
 fn nested_error_source_inner() {
     let io_error = std::io::Error::new(std::io::ErrorKind::NotFound, "file not found");
     let error: NestedError<std::io::Error, std::fmt::Error> = NestedError::Inner(io_error);
-    
+
     let source = error.source();
     assert!(source.is_some());
     assert!(source.unwrap().is::<std::io::Error>());
@@ -48,7 +48,7 @@ fn nested_error_source_inner() {
 fn nested_error_source_outer() {
     let io_error = std::io::Error::new(std::io::ErrorKind::NotFound, "file not found");
     let error: NestedError<std::fmt::Error, std::io::Error> = NestedError::Outer(io_error);
-    
+
     let source = error.source();
     assert!(source.is_some());
     assert!(source.unwrap().is::<std::io::Error>());

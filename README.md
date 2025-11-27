@@ -8,7 +8,7 @@
 A compact crate offering a suite of extensions providing helpers for manipulating and transforming `Result` and `Option` types fluently,as well as transforming types into `Result` and `Option` types.
 
 ## Provided Traits
-### IntoOption
+### `IntoOption`
 Wrap any value in a `Option`. This is equivalent to `Some(value)` and `None`, but may be more readable in long chains.
 
 ```rust
@@ -22,7 +22,7 @@ let none = 42.into_none::<u8>();
 assert_eq!(None, none);
 ```
 
-### IntoResult
+### `IntoResult`
 Wrap any value in a `Result`. This is equivalent to `Ok(value)` and `Err(value)`, but may be more readable in long chains.
 
 ```rust
@@ -44,7 +44,7 @@ This is useful for handling a variant by sinking it into a side-effecting functi
 
 See the documentation for brief examples.
 
-### bool::Then
+### `bool::Then`
 Transforms `true` into `None` or `Err`, and `false` into `Some(())` or `Ok(())`.
 
 This is useful for ergonomically transforming boolean guards in methods that return `Option<T>` or `Result<T, E>`.
@@ -85,7 +85,7 @@ let mut map = HashMap::new();
 map.insert("key", "value").expect_none("key already exists");
 ```
 
-### FlattenErr
+### `FlattenErr`
 Flattens a `Result<Result<T, EInner>, EOuter>` into a `Result<T, NestedError<EInner, EOuter>>`. This is useful when working with nested `Result` types where you want to preserve both the inner and outer error types.
 
 ```rust
@@ -104,7 +104,7 @@ let err = result.flatten_err().expect_err("should be err");
 assert_eq!(err, NestedError::Outer(2));
 ```
 
-### BoxErr
+### `BoxErr`
 Handles nested `Result` types by boxing errors into a `Box<dyn Error>`. This trait works with `Result`s with up to four layers of nesting, so long as all error types implement `std::error::Error`. This is useful when working with operations that produce nested `Result`s and erasing the error type is acceptable.
 
 If all the error types are the same, consider using `Result::flatten` instead. For results with only two layers of nesting, consider using `FlattenErr::flatten_err`.

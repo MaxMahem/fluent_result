@@ -1,5 +1,5 @@
-use std::convert::Infallible;
 use fluent_result::UnwrapNever;
+use std::convert::Infallible;
 
 #[test]
 fn unwrap_never() {
