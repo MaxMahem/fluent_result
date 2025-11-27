@@ -8,7 +8,6 @@
 pub mod bool;
 mod expect_none;
 mod into;
-mod map;
 mod nested;
 mod sink;
 mod unwrap_never;
@@ -16,7 +15,6 @@ mod unwrap_never;
 pub use bool::Then;
 pub use expect_none::ExpectNone;
 pub use into::{IntoOption, IntoResult};
-pub use map::{OptionMapTo, ResultMapTo};
 pub use nested::{BoxErr, FlattenErr};
 pub use sink::{SinkOption, SinkResult};
 pub use unwrap_never::UnwrapNever;

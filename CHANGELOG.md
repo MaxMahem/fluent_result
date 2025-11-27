@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Removed `log` series of traits. Use `sink` series of traits instead.
+- Removed `OptionMapTo` and `ResultMapTo` traits. Use standard `Option::map`, `Result::map`, and `Result::map_err` methods instead.
 
 ## [0.6.3] - 2025/11/14
 

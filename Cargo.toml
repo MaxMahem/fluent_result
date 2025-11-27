@@ -13,12 +13,10 @@ categories = ["rust-patterns", "development-tools", "data-structures"]
 
 [features]
 default = []
-tracing = ["dep:tracing"]
 
 [dependencies]
-tracing = { version = "0.1", optional = true }
+derive_more = { version = "2.0.1", features = ["is_variant", "try_unwrap", "unwrap"] }
 
 [dev-dependencies]
-fluent_result = { path = ".", features = ["tracing"] }
-tracing-subscriber = "0.3.20"
+fluent_result = { path = ".", features = [] }
 

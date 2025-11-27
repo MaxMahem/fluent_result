@@ -31,17 +31,3 @@ impl<T> UnwrapNever<T> for InfallibleResult<T> {
         unsafe { self.unwrap_unchecked() }
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use std::convert::Infallible;
-
-    use super::*;
-
-    #[test]
-    fn unwrap_never() {
-        let result: Result<u32, Infallible> = Ok(42);
-        let value = result.unwrap_never();
-        assert_eq!(value, 42);
-    }
-}

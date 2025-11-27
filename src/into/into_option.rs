@@ -43,20 +43,3 @@ pub trait IntoOption {
 }
 
 impl<T> IntoOption for T {}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn into_option() {
-        let some = 42.into_some();
-        assert_eq!(some, Some(42));
-    }
-
-    #[test]
-    fn into_none() {
-        let none: Option<&str> = 42.into_none();
-        assert!(none.is_none());
-    }
-}

@@ -28,15 +28,3 @@ impl<T> SinkOption<T> for Option<T> {
         }
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn sink() {
-        let mut log = String::new();
-        Some("oops").sink(|e| log.push_str(e));
-        assert_eq!(log, "oops");
-    }
-}

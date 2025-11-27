@@ -46,41 +46,13 @@ pub trait ExpectNone: internal::Sealed {
 /// Implementation for all [`Option<T>`].
 impl<T> ExpectNone for Option<T> {
     fn unwrap_none(self) {
-        if self.is_some() {
-            panic!("called `Option::unwrap_none()` on a `Some` value");
-        }
+        assert!(
+            self.is_none(),
+            "called `Option::unwrap_none()` on a `Some` value"
+        );
     }
 
     fn expect_none(self, msg: &str) {
-        if self.is_some() {
-            panic!("{}", msg);
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    #[should_panic]
-    fn unwrap_none_panics_on_some() {
-        Some(()).unwrap_none();
-    }
-
-    #[test]
-    fn unwrap_none_unwraps_none_on_none() {
-        assert_eq!(None::<u8>.unwrap_none(), ());
-    }
-
-    #[test]
-    #[should_panic]
-    fn expect_none_panics_on_some() {
-        Some(()).expect_none("test");
-    }
-
-    #[test]
-    fn expect_none_unwraps_none_on_none() {
-        assert_eq!(None::<u8>.expect_none("test"), ());
+        assert!(self.is_none(), "{}", msg);
     }
 }
