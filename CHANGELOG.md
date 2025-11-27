@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.7.0] - 2025/11/27
+
+### Added
+
+- Added `BoxErr` trait, for handling nested `Result` types with `Box<dyn Error>`
+- Added `FlattenErr` trait, for handling nested `Result` types with a flattened error type
+
 ### Changed
 
 - Consolidated `ThenErr` and `ThenNone` traits into a single `bool` module file

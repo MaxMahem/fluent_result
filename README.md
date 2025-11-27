@@ -84,3 +84,41 @@ use fluent_result::ExpectNone;
 let mut map = HashMap::new();
 map.insert("key", "value").expect_none("key already exists");
 ```
+
+### FlattenErr
+Flattens a `Result<Result<T, EInner>, EOuter>` into a `Result<T, NestedError<EInner, EOuter>>`. This is useful when working with nested `Result` types where you want to preserve both the inner and outer error types.
+
+```rust
+use fluent_result::{FlattenErr, NestedError};
+
+let result: Result<Result<i32, &str>, i32> = Ok(Ok(1));
+let ok = result.flatten_err().expect("should be ok");
+assert_eq!(ok, 1);
+
+let result: Result<Result<i32, &str>, i32> = Ok(Err("oops"));
+let err = result.flatten_err().expect_err("should be err");
+assert_eq!(err, NestedError::Inner("oops"));
+
+let result: Result<Result<i32, &str>, i32> = Err(2);
+let err = result.flatten_err().expect_err("should be err");
+assert_eq!(err, NestedError::Outer(2));
+```
+
+### BoxErr
+Handles nested `Result` types by boxing errors into a `Box<dyn Error>`. This trait works with `Result`s with up to four layers of nesting, so long as all error types implement `std::error::Error`. This is useful when working with operations that produce nested `Result`s and erasing the error type is acceptable.
+
+If all the error types are the same, consider using `Result::flatten` instead. For results with only two layers of nesting, consider using `FlattenErr::flatten_err`.
+
+```rust
+use std::error::Error;
+use fluent_result::BoxErr;
+
+let result: Result<Result<i32, std::io::Error>, std::io::Error> = Ok(Ok(42));
+let boxed: Result<i32, Box<dyn Error>> = result.box_err();
+assert_eq!(boxed.unwrap(), 42);
+
+let err_io = std::io::Error::from(std::io::ErrorKind::NotFound);
+let result: Result<Result<i32, std::io::Error>, std::fmt::Error> = Ok(Err(err_io));
+let boxed: Result<i32, Box<dyn Error>> = result.box_err();
+assert!(boxed.is_err());
+```
