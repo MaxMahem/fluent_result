@@ -1,3 +1,6 @@
+#[cfg(doc)]
+use crate::FlattenErr;
+
 /// Allows handling nested [`Result`]s by boxing errors into a [`Box<dyn Error>`].
 ///
 /// This trait provides a way to convert nested [`Result`] types with different [`std::error::Error`] error types into
