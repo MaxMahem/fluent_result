@@ -1,4 +1,4 @@
-# Fluent_Result
+# `Fluent_Result`
 
 [![Build](https://github.com/MaxMahem/fluent_result/actions/workflows/build.yml/badge.svg)](https://github.com/MaxMahem/fluent_result/actions/workflows/build.yml)
 [![Docs](https://github.com/MaxMahem/fluent_result/actions/workflows/docs.yml/badge.svg)](https://MaxMahem.github.io/fluent_result/fluent_result/index.html)
@@ -74,7 +74,7 @@ fn bar(number: u32) -> Result<u32, String> {
 assert_eq!(Err("number is even".to_string()), bar(2));
 ```
 
-### ExpectNone
+### `ExpectNone`
 Unwraps the `None` variant of an `Option<T>`. This is useful for validating methods that *should* return `None` but may return `Some` in some cases. For example, when inserting a key value pair that should be unique into a hashmap.
 
 ```rust
