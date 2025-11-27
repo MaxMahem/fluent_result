@@ -31,11 +31,10 @@ use crate::FlattenErr;
 /// assert!(boxed.is_err());
 /// ```
 pub trait BoxErr<T> {
-    /// Boxes the error(s) in a [`Result`] and flattens any nesting.
+    /// Boxes the error in a [`Result`], flattening any nesting.
     ///
-    /// For a single-level [`Result<T, E>`], this boxes the error.
-    /// For nested [`Result`]s, this recursively flattens all levels into a single
-    /// [`Result<T, Box<dyn Error>>`].
+    /// For a single-level [`Result<T, E>`], this boxes the error. For nested [`Result`]s, this
+    /// recursively flattens all levels into a single [`Result<T, Box<dyn Error>>`].
     ///
     /// # Errors
     ///
