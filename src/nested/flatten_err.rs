@@ -11,7 +11,7 @@ pub trait FlattenErr<T, EInner, EOuter>: Sized {
     /// # Examples
     ///
     /// ```rust
-    /// use collect_failable::{FlattenErr, NestedError};
+    /// use fluent_result::{FlattenErr, NestedError};
     ///
     /// let result: Result<Result<i32, &str>, i32> = Ok(Ok(1));
     /// let ok = result.flatten_err().expect("should be ok");

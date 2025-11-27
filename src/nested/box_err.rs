@@ -23,7 +23,7 @@
 /// assert_eq!(boxed.unwrap(), 42);
 ///
 /// let err_io = std::io::Error::from(std::io::ErrorKind::NotFound);
-/// let result: Result<Result<i32, std::io::Error>, std::fmt::Error> = Err(Err(err_io));
+/// let result: Result<Result<i32, std::io::Error>, std::fmt::Error> = Ok(Err(err_io));
 /// let boxed: Result<i32, Box<dyn Error>> = result.box_err();
 /// assert!(boxed.is_err());
 /// ```

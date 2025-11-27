@@ -15,7 +15,7 @@ mod unwrap_never;
 pub use bool::Then;
 pub use expect_none::ExpectNone;
 pub use into::{IntoOption, IntoResult};
-pub use nested::{BoxErr, FlattenErr};
+pub use nested::{BoxErr, FlattenErr, NestedError};
 pub use sink::{SinkOption, SinkResult};
 pub use unwrap_never::UnwrapNever;
 
