@@ -1,6 +1,6 @@
 [package]
 name = "fluent_result"
-version = "0.7.0"
+version = "0.8.0"
 edition = "2024"
 authors = ["Austin Stanley <maxtmahem@gmail.com>"]
 description = "Fluent postfix helpers for Rust's Result and Option types"
@@ -16,6 +16,7 @@ default = []
 
 [dependencies]
 derive_more = { version = "2.0.1", features = ["is_variant", "try_unwrap", "unwrap"] }
+sealed = "0.6.0"
 
 [dev-dependencies]
 fluent_result = { path = ".", features = [] }

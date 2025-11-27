@@ -1,4 +1,4 @@
-use fluent_result::BoxErr;
+use fluent_result::nested::BoxErr;
 
 // Single-level Result tests
 #[test]

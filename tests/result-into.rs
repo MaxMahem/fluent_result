@@ -1,4 +1,4 @@
-use fluent_result::{IntoOption, IntoResult};
+use fluent_result::into::{IntoOption, IntoResult};
 
 #[test]
 fn into_some() {

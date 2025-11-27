@@ -1,4 +1,5 @@
 /// Allows flattening a [`Result<Result<T, EInner>, EOuter>`] into a [`Result<T, NestedError<EInner, EOuter>>`].
+#[sealed::sealed]
 pub trait FlattenErr<T, EInner, EOuter>: Sized {
     /// Flattens a [`Result<Result<T, EInner>, EOuter>`] into a [`Result<T, NestedError<EInner, EOuter>>`].
     ///
@@ -11,7 +12,7 @@ pub trait FlattenErr<T, EInner, EOuter>: Sized {
     /// # Examples
     ///
     /// ```rust
-    /// use fluent_result::{FlattenErr, NestedError};
+    /// use fluent_result::nested::{FlattenErr, NestedError};
     ///
     /// let result: Result<Result<i32, &str>, i32> = Ok(Ok(1));
     /// let ok = result.flatten_err().expect("should be ok");
@@ -28,6 +29,7 @@ pub trait FlattenErr<T, EInner, EOuter>: Sized {
     fn flatten_err(self) -> Result<T, NestedError<EInner, EOuter>>;
 }
 
+#[sealed::sealed]
 impl<T, EInner, EOuter> FlattenErr<T, EInner, EOuter> for Result<Result<T, EInner>, EOuter> {
     fn flatten_err(self) -> Result<T, NestedError<EInner, EOuter>> {
         match self {

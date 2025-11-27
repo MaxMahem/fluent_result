@@ -1,4 +1,4 @@
-use fluent_result::{FlattenErr, NestedError};
+use fluent_result::nested::{FlattenErr, NestedError};
 use std::error::Error;
 
 #[test]

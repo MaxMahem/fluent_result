@@ -1,10 +1,9 @@
 #[cfg(doc)]
 use std::collections::HashMap;
 
-use crate::internal;
-
 /// An extension trait for [`Option<T>`] that allows unwrapping the [`None`] variant.
-pub trait ExpectNone: internal::Sealed {
+#[sealed::sealed]
+pub trait ExpectNone {
     /// Unwrap a [`None`] [Option] value, otherwise panic.
     ///
     /// This is useful for validating that a method that should return [`None`] does so. For
@@ -16,7 +15,7 @@ pub trait ExpectNone: internal::Sealed {
     /// # Examples
     ///
     /// ```rust
-    /// use fluent_result::ExpectNone;
+    /// use fluent_result::expect::ExpectNone;
     ///
     /// let none: Option<u8> = None;
     /// none.unwrap_none();
@@ -35,7 +34,7 @@ pub trait ExpectNone: internal::Sealed {
     /// # Examples
     ///
     /// ```rust
-    /// use fluent_result::ExpectNone;
+    /// use fluent_result::expect::ExpectNone;
     ///
     /// let none: Option<u8> = None;
     /// none.expect_none("test");
@@ -44,6 +43,7 @@ pub trait ExpectNone: internal::Sealed {
 }
 
 /// Implementation for all [`Option<T>`].
+#[sealed::sealed]
 impl<T> ExpectNone for Option<T> {
     fn unwrap_none(self) {
         assert!(

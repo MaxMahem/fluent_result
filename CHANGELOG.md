@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.8.0] - 2025/11/27
+
+### Removed
+
+- Removed `UnitResult` and `InfallibleResult` type aliases
+
+### Changed
+
+- Moved `FlattenErr` and `BoxErr` traits to `nested` module
+- Moved `ExpectNone` and `UnwrapNever` traits to `expect` module
+- Moved `IntoOption` and `IntoResult` traits to `into` module
+- Moved `SinkOption` and `SinkResult` traits to `sink` module
+- Sealed `FlattenErr` and `BoxErr` traits
+
 ## [0.7.0] - 2025/11/27
 
 ### Added

@@ -4,7 +4,7 @@ pub trait IntoOption {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::IntoOption;
+    /// use fluent_result::into::IntoOption;
     ///
     /// let some = 42.into_some();
     /// assert!(some.is_some());
@@ -26,7 +26,7 @@ pub trait IntoOption {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::IntoOption;
+    /// use fluent_result::into::IntoOption;
     ///
     /// let some: Option<&str> = 42.into_none();
     /// assert!(some.is_none());

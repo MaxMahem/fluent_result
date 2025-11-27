@@ -1,10 +1,9 @@
-use crate::internal;
-
 /// An extension trait for [`bool`] that provides conversion methods to [`Result`] and [`Option`].
 ///
 /// This trait allows transforming boolean values into [`Result`] or [`Option`] types,
 /// making it easy to use boolean conditions with the `?` operator for early returns.
-pub trait Then: internal::Sealed {
+#[sealed::sealed]
+pub trait Then {
     /// Returns [`Err`] if the [`bool`] value is `true`, and [`Ok(())`](Ok) otherwise.
     ///
     /// This is useful for allowing an early return from a method that returns [`Result`] via
@@ -49,6 +48,7 @@ pub trait Then: internal::Sealed {
 }
 
 /// The implementation of [`Then`] for [`bool`].
+#[sealed::sealed]
 impl Then for bool {
     fn then_err<E>(self, err: E) -> Result<(), E> {
         if self { Err(err) } else { Ok(()) }

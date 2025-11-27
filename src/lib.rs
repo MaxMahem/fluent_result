@@ -6,25 +6,14 @@
 /// Boolean extension traits for converting to [`Result`] and [`Option`] types.
 pub mod bool;
 
-mod expect_none;
-mod into;
-mod nested;
-mod sink;
-mod unwrap_never;
+/// Extension traits for panic unwrapping [`Result`] and [`Option`] types.
+pub mod expect;
 
-pub use bool::Then;
-pub use expect_none::ExpectNone;
-pub use into::{IntoOption, IntoResult};
-pub use nested::{BoxErr, FlattenErr, NestedError};
-pub use sink::{SinkOption, SinkResult};
-pub use unwrap_never::UnwrapNever;
+/// Extension traits for converting to [`Result`] and [`Option`] types.
+pub mod into;
 
-/// A [Result] type with a unit `()` success type and variable error type.
-///
-/// Useful for failable methods that have no specific return value.
-pub type UnitResult<E> = Result<(), E>;
+/// Extension traits for nested [`Result`]s.
+pub mod nested;
 
-/// An infallible [Result] type. That is a [Result] type that cannot fail.
-pub type InfallibleResult<T> = Result<T, std::convert::Infallible>;
-
-mod internal;
+/// Extension traits for [`Result`] and [`Option`] types.
+pub mod sink;

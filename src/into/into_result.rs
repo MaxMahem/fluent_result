@@ -14,7 +14,7 @@ pub trait IntoResult {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::IntoResult;
+    /// use fluent_result::into::IntoResult;
     ///
     /// let owned_result: Result<u32, ()> = 42.into_ok();
     /// assert!(owned_result.is_ok());
@@ -41,7 +41,7 @@ pub trait IntoResult {
     ///
     /// # Example
     /// ```rust
-    /// use fluent_result::IntoResult;
+    /// use fluent_result::into::IntoResult;
     ///
     /// let err = "error".into_err::<()>();
     /// assert!(err.is_err());

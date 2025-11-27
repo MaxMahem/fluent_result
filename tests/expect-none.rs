@@ -1,4 +1,4 @@
-use fluent_result::ExpectNone;
+use fluent_result::expect::ExpectNone;
 
 #[test]
 #[should_panic(expected = "called `Option::unwrap_none()` on a `Some` value")]

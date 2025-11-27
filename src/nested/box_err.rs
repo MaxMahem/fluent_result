@@ -1,5 +1,5 @@
 #[cfg(doc)]
-use crate::FlattenErr;
+use crate::nested::FlattenErr;
 
 /// Allows handling nested [`Result`]s by boxing errors into a [`Box<dyn Error>`].
 ///
@@ -19,7 +19,7 @@ use crate::FlattenErr;
 ///
 /// ```rust
 /// use std::error::Error;
-/// use fluent_result::BoxErr;
+/// use fluent_result::nested::BoxErr;
 ///
 /// let result: Result<Result<i32, std::io::Error>, std::io::Error> = Ok(Ok(42));
 /// let boxed: Result<i32, Box<dyn Error>> = result.box_err();
@@ -30,6 +30,7 @@ use crate::FlattenErr;
 /// let boxed: Result<i32, Box<dyn Error>> = result.box_err();
 /// assert!(boxed.is_err());
 /// ```
+#[sealed::sealed]
 pub trait BoxErr<T> {
     /// Boxes the error in a [`Result`], flattening any nesting.
     ///
@@ -44,6 +45,7 @@ pub trait BoxErr<T> {
 }
 
 /// Implementation for Result<T, E>
+#[sealed::sealed]
 impl<T, E> BoxErr<T> for Result<T, E>
 where
     E: std::error::Error + 'static,
@@ -54,6 +56,7 @@ where
 }
 
 /// Double-nested Results: Result<Result<T, E1>, E2>
+#[sealed::sealed]
 impl<T, E1, E2> BoxErr<T> for Result<Result<T, E1>, E2>
 where
     E1: std::error::Error + 'static,
@@ -68,6 +71,7 @@ where
 }
 
 /// Triple-nested Results: Result<Result<Result<T, E1>, E2>, E3>
+#[sealed::sealed]
 impl<T, E1, E2, E3> BoxErr<T> for Result<Result<Result<T, E1>, E2>, E3>
 where
     E1: std::error::Error + 'static,
@@ -83,6 +87,7 @@ where
 }
 
 /// Quadruple-nested Results: Result<Result<Result<Result<T, E1>, E2>, E3>, E4>
+#[sealed::sealed]
 impl<T, E1, E2, E3, E4> BoxErr<T> for Result<Result<Result<Result<T, E1>, E2>, E3>, E4>
 where
     E1: std::error::Error + 'static,

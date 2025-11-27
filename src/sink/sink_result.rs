@@ -1,16 +1,15 @@
-use crate::internal::Sealed;
-
 /// Extension trait for sinking a variant of a `Result`, leaving an `Option`.
 ///
 /// This is useful for one-sided handling where you want to consume one variant
 /// and optionally propagate the other.
-pub trait SinkResult<T, E>: Sealed {
+#[sealed::sealed]
+pub trait SinkResult<T, E> {
     /// Sink the [`Ok`] variant into `sink`, returning the [`Err`] variant, if any.
     ///
     /// # Examples
     ///
     /// ```rust
-    /// use fluent_result::SinkResult;
+    /// use fluent_result::sink::SinkResult;
     ///
     /// let mut log = String::new();
     ///
@@ -35,7 +34,7 @@ pub trait SinkResult<T, E>: Sealed {
     /// # Examples
     ///
     /// ```rust
-    /// use fluent_result::SinkResult;
+    /// use fluent_result::sink::SinkResult;
     ///
     /// let mut log = String::new();
     ///
@@ -56,6 +55,7 @@ pub trait SinkResult<T, E>: Sealed {
         F: FnOnce(E);
 }
 
+#[sealed::sealed]
 impl<T, E> SinkResult<T, E> for Result<T, E> {
     fn sink_ok<F>(self, sink: F) -> Option<E>
     where

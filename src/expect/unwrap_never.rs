@@ -1,10 +1,11 @@
-use crate::InfallibleResult;
+use std::convert::Infallible;
 
-/// A trait for unwrapping the [`Ok`] varaint of an [`InfallibleResult`], panic free.
+/// A trait for unwrapping the [`Ok`] varaint of an [`Result<T, Infallible>`], panic free.
 ///
 /// # Type Parameters
 /// - `T`: The success type.
-pub trait UnwrapNever<T>: crate::internal::Sealed {
+#[sealed::sealed]
+pub trait UnwrapNever<T> {
     /// Unwraps a [`Result<T, Infallible>`] without the possibility of panic.
     /// Functionaly this is the same as calling [`Result::unwrap`].
     ///
@@ -16,7 +17,7 @@ pub trait UnwrapNever<T>: crate::internal::Sealed {
     ///
     /// ```rust
     /// use std::convert::Infallible;
-    /// use fluent_result::UnwrapNever;
+    /// use fluent_result::expect::UnwrapNever;
     ///
     /// let result: Result<u32, Infallible> = Ok(42);
     /// let value = result.unwrap_never();
@@ -26,7 +27,8 @@ pub trait UnwrapNever<T>: crate::internal::Sealed {
 }
 
 /// Implementation for all [Result<T, Infallible>].
-impl<T> UnwrapNever<T> for InfallibleResult<T> {
+#[sealed::sealed]
+impl<T> UnwrapNever<T> for Result<T, Infallible> {
     fn unwrap_never(self) -> T {
         unsafe { self.unwrap_unchecked() }
     }

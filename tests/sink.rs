@@ -1,4 +1,4 @@
-use fluent_result::{SinkOption, SinkResult};
+use fluent_result::sink::{SinkOption, SinkResult};
 use std::fmt::Write;
 
 #[test]

@@ -12,7 +12,7 @@ A compact crate offering a suite of extensions providing helpers for manipulatin
 Wrap any value in a `Option`. This is equivalent to `Some(value)` and `None`, but may be more readable in long chains.
 
 ```rust
-use fluent_result::IntoOption;
+use fluent_result::into::IntoOption;
 
 let some = 42.into_some();
 assert_eq!(Some(42), some);
@@ -26,7 +26,7 @@ assert_eq!(None, none);
 Wrap any value in a `Result`. This is equivalent to `Ok(value)` and `Err(value)`, but may be more readable in long chains.
 
 ```rust
-use fluent_result::IntoResult;
+use fluent_result::into::IntoResult;
 
 // if necessary, the error type can be specified
 let ok = 42.into_ok::<&str>();
@@ -79,7 +79,7 @@ Unwraps the `None` variant of an `Option<T>`. This is useful for validating meth
 
 ```rust
 use std::collections::HashMap;
-use fluent_result::ExpectNone;
+use fluent_result::expect::ExpectNone;
 
 let mut map = HashMap::new();
 map.insert("key", "value").expect_none("key already exists");
@@ -89,7 +89,7 @@ map.insert("key", "value").expect_none("key already exists");
 Flattens a `Result<Result<T, EInner>, EOuter>` into a `Result<T, NestedError<EInner, EOuter>>`. This is useful when working with nested `Result` types where you want to preserve both the inner and outer error types.
 
 ```rust
-use fluent_result::{FlattenErr, NestedError};
+use fluent_result::nested::{FlattenErr, NestedError};
 
 let result: Result<Result<i32, &str>, i32> = Ok(Ok(1));
 let ok = result.flatten_err().expect("should be ok");
@@ -111,7 +111,7 @@ If all the error types are the same, consider using `Result::flatten` instead. F
 
 ```rust
 use std::error::Error;
-use fluent_result::BoxErr;
+use fluent_result::nested::BoxErr;
 
 let result: Result<Result<i32, std::io::Error>, std::io::Error> = Ok(Ok(42));
 let boxed: Result<i32, Box<dyn Error>> = result.box_err();
