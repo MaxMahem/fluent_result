@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Consolidated `ThenErr` and `ThenNone` traits into a single `bool` module file
+
+### Removed
+
+- Removed `log` series of traits. Use `sink` series of traits instead.
+
 ## [0.6.3] - 2025/11/14
 
 ### Added
