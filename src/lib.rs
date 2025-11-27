@@ -1,19 +1,23 @@
 #![doc = include_str!("../README.md")]
-mod bool;
+#![warn(clippy::pedantic)]
+#![warn(clippy::cargo)]
+#![warn(missing_docs)]
+
+
+/// Boolean extension traits for converting to [`Result`] and [`Option`] types.
+pub mod bool;
 mod expect_none;
 mod into;
 mod map;
+mod nested;
 mod sink;
 mod unwrap_never;
 
-#[cfg(feature = "tracing")]
-/// Provides traits for transforming and manipulating [Result] and [Option] variants with `tracing`.
-pub mod log;
-
-pub use bool::{ThenErr, ThenNone};
+pub use bool::Then;
 pub use expect_none::ExpectNone;
 pub use into::{IntoOption, IntoResult};
 pub use map::{OptionMapTo, ResultMapTo};
+pub use nested::{BoxErr, FlattenErr};
 pub use sink::{SinkOption, SinkResult};
 pub use unwrap_never::UnwrapNever;
 

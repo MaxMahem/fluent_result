@@ -44,14 +44,13 @@ This is useful for handling a variant by sinking it into a side-effecting functi
 
 See the documentation for brief examples.
 
-### ThenNone and ThenErr
+### bool::Then
 Transforms `true` into `None` or `Err`, and `false` into `Some(())` or `Ok(())`.
 
 This is useful for ergonomically transforming boolean guards in methods that return `Option<T>` or `Result<T, E>`.
 
 ```rust
-use fluent_result::ThenNone;
-use fluent_result::ThenErr;
+use fluent_result::bool::Then;
 
 fn foo(number: u32) -> Option<u32> {
     // guard
