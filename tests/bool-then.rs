@@ -7,6 +7,12 @@ fn test_then_err() {
 }
 
 #[test]
+fn test_then_err_with() {
+    assert_eq!(true.then_err_with(|| 42), Err(42));
+    assert_eq!(false.then_err_with(|| 42), Ok(()));
+}
+
+#[test]
 fn test_then_none() {
     assert_eq!(true.then_none(), None);
     assert_eq!(false.then_none(), Some(()));
