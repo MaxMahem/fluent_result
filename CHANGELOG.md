@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added `then_err_with` trait, for lazily evaluating an `Err` value when true
+- Added `then_err_with` trait, for lazily creating an `Err` value when true
 
 ## [0.8.0] - 2025/11/27
 
