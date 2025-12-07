@@ -50,6 +50,7 @@ impl<T, E> BoxErr<T> for Result<T, E>
 where
     E: std::error::Error + 'static,
 {
+    #[inline]
     fn box_err(self) -> Result<T, Box<dyn std::error::Error>> {
         self.map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
     }
@@ -62,6 +63,7 @@ where
     E1: std::error::Error + 'static,
     E2: std::error::Error + 'static,
 {
+    #[inline]
     fn box_err(self) -> Result<T, Box<dyn std::error::Error>> {
         match self {
             Ok(inner) => inner.box_err(),
@@ -78,6 +80,7 @@ where
     E2: std::error::Error + 'static,
     E3: std::error::Error + 'static,
 {
+    #[inline]
     fn box_err(self) -> Result<T, Box<dyn std::error::Error>> {
         match self {
             Ok(inner) => inner.box_err(),
@@ -86,7 +89,7 @@ where
     }
 }
 
-/// Quadruple-nested Results: Result<Result<Result<Result<T, E1>, E2>, E3>, E4>
+/// Quadruple-nested Results: Result<Result<Result<Result<T, E1>, E2>, E3>, E4>>
 #[sealed::sealed]
 impl<T, E1, E2, E3, E4> BoxErr<T> for Result<Result<Result<Result<T, E1>, E2>, E3>, E4>
 where
@@ -95,6 +98,7 @@ where
     E3: std::error::Error + 'static,
     E4: std::error::Error + 'static,
 {
+    #[inline]
     fn box_err(self) -> Result<T, Box<dyn std::error::Error>> {
         match self {
             Ok(inner) => inner.box_err(),

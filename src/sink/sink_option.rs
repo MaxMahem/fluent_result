@@ -19,6 +19,7 @@ pub trait SinkOption<T> {
 
 #[sealed::sealed]
 impl<T> SinkOption<T> for Option<T> {
+    #[inline]
     fn sink<F>(self, sink: F)
     where
         F: FnOnce(T),

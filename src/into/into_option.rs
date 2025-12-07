@@ -9,6 +9,7 @@ pub trait IntoOption {
     /// let some = 42.into_some();
     /// assert!(some.is_some());
     /// ```
+    #[inline]
     fn into_some(self) -> Option<Self>
     where
         Self: Sized,
@@ -34,6 +35,7 @@ pub trait IntoOption {
     /// let some = 42.into_none::<&str>();
     /// assert!(some.is_none());
     /// ```
+    #[inline]
     fn into_none<TOut>(self) -> Option<TOut>
     where
         Self: Sized,

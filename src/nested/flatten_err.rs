@@ -31,6 +31,7 @@ pub trait FlattenErr<T, EInner, EOuter>: Sized {
 
 #[sealed::sealed]
 impl<T, EInner, EOuter> FlattenErr<T, EInner, EOuter> for Result<Result<T, EInner>, EOuter> {
+    #[inline]
     fn flatten_err(self) -> Result<T, NestedError<EInner, EOuter>> {
         match self {
             Ok(Ok(v)) => Ok(v),

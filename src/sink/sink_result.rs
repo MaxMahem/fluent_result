@@ -57,6 +57,7 @@ pub trait SinkResult<T, E> {
 
 #[sealed::sealed]
 impl<T, E> SinkResult<T, E> for Result<T, E> {
+    #[inline]
     fn sink_ok<F>(self, sink: F) -> Option<E>
     where
         F: FnOnce(T),
@@ -68,6 +69,7 @@ impl<T, E> SinkResult<T, E> for Result<T, E> {
         None
     }
 
+    #[inline]
     fn sink_err<F>(self, sink: F) -> Option<T>
     where
         F: FnOnce(E),

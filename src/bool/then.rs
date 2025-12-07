@@ -90,10 +90,12 @@ pub trait Then {
 /// The implementation of [`Then`] for [`bool`].
 #[sealed::sealed]
 impl Then for bool {
+    #[inline]
     fn then_err<E>(self, err: E) -> Result<(), E> {
         if self { Err(err) } else { Ok(()) }
     }
 
+    #[inline]
     fn then_err_with<E, F>(self, factory: F) -> Result<(), E>
     where
         F: FnOnce() -> E,
@@ -101,6 +103,7 @@ impl Then for bool {
         if self { Err(factory()) } else { Ok(()) }
     }
 
+    #[inline]
     fn then_none(self) -> Option<()> {
         if self { None } else { Some(()) }
     }

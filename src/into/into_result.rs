@@ -20,6 +20,7 @@ pub trait IntoResult {
     /// assert!(owned_result.is_ok());
     /// let owned_result = 42.into_ok::<()>();
     /// assert!(owned_result.is_ok());
+    #[inline]
     fn into_ok<E>(self) -> Result<Self, E>
     where
         Self: Sized,
@@ -48,6 +49,7 @@ pub trait IntoResult {
     /// let err: Result<(), &str> = "error".into_err();
     /// assert!(err.is_err());
     /// ```
+    #[inline]
     fn into_err<T>(self) -> Result<T, Self>
     where
         Self: Sized,

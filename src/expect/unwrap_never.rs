@@ -29,6 +29,7 @@ pub trait UnwrapNever<T> {
 /// Implementation for all [Result<T, Infallible>].
 #[sealed::sealed]
 impl<T> UnwrapNever<T> for Result<T, Infallible> {
+    #[inline]
     fn unwrap_never(self) -> T {
         unsafe { self.unwrap_unchecked() }
     }
