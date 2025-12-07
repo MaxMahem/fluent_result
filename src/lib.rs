@@ -3,7 +3,7 @@
 #![warn(clippy::cargo)]
 #![warn(missing_docs)]
 
-/// Boolean extension traits for converting to [`Result`] and [`Option`] types.
+/// Extension traits for [`bool`] values.
 pub mod bool;
 
 /// Extension traits for panic unwrapping [`Result`] and [`Option`] types.

@@ -13,7 +13,7 @@ pub trait Then {
     ///
     /// * `err` - The value to return as [`Err`] if the [`bool`] value is `true`.
     ///
-    /// Note this value is eagerly evaluated, for a lazily evaluated version see [`then_err_with`].
+    /// Note this value is eagerly evaluated, for a lazily evaluated version see [`Then::then_err_with`].
     ///
     /// # Errors
     ///
@@ -44,7 +44,7 @@ pub trait Then {
     /// * `factory` - A function that returns the value to return as [`Err`] if the [`bool`]
     /// value is `true`.
     ///
-    /// Note this value is lazily evaluated, for an eagerly evaluated version see [`then_err`].
+    /// Note this value is lazily evaluated, for an eagerly evaluated version see [`Then::then_err`].
     ///
     /// # Errors
     ///
