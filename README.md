@@ -74,6 +74,16 @@ fn bar(number: u32) -> Result<u32, String> {
 assert_eq!(Err("number is even".to_string()), bar(2));
 ```
 
+### `bool::Expect`
+Allows you to expect a `true` or `false` value from a bool, with a custom assert message.
+
+```rust
+use fluent_result::bool::Expect;
+
+true.expect_true("Panic message if false");
+false.exect_false("Panic message if true");
+```
+
 ### `ExpectNone`
 Unwraps the `None` variant of an `Option<T>`. This is useful for validating methods that *should* return `None` but may return `Some` in some cases. For example, when inserting a key value pair that should be unique into a hashmap.
 
