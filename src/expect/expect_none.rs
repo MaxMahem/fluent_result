@@ -46,6 +46,7 @@ pub trait ExpectNone {
 #[sealed::sealed]
 impl<T> ExpectNone for Option<T> {
     #[inline]
+    #[track_caller]
     fn unwrap_none(self) {
         assert!(
             self.is_none(),
@@ -54,6 +55,7 @@ impl<T> ExpectNone for Option<T> {
     }
 
     #[inline]
+    #[track_caller]
     fn expect_none(self, msg: &str) {
         assert!(self.is_none(), "{}", msg);
     }

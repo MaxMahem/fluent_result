@@ -10,11 +10,13 @@ pub trait Expect {
 #[sealed::sealed]
 impl Expect for bool {
     #[inline]
+    #[track_caller]
     fn expect_true(self, msg: &str) {
         assert!(self, "{}", msg);
     }
 
     #[inline]
+    #[track_caller]
     fn expect_false(self, msg: &str) {
         assert!(!self, "{}", msg);
     }
