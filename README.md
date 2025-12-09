@@ -75,22 +75,41 @@ fn bar(number: u32) -> Result<u32, String> {
 assert_eq!(Err("number is even".to_string()), bar(2));
 ```
 
-### `bool::Expect`
-Allows you to expect a `true` or `false` value from a bool, with a custom assert message.
+### `bool::expect`
+Provides debug-only (`bool::expect::dbg`) and release-mode (`bool::expect::rls`) assertions for bool values.
 
+**Debug-only assertions (no-op in release):**
 ```rust
-use fluent_result::bool::Expect;
+use fluent_result::bool::expect::dbg::Expect;
 
 true.expect_true("Panic message if false");
-false.exect_false("Panic message if true");
+false.expect_false("Panic message if true");
 ```
 
-### `ExpectNone`
-Unwraps the `None` variant of an `Option<T>`. This is useful for validating methods that *should* return `None` but may return `Some` in some cases. For example, when inserting a key value pair that should be unique into a hashmap.
+**Always-on assertions:**
+```rust
+use fluent_result::bool::expect::rls::Expect;
 
+true.expect_true("Panic message if false");
+false.expect_false("Panic message if true");
+```
+
+### `expect_none`
+Provides debug-only (`expect_none::dbg`) and release-mode (`expect_none::rls`) assertions for unwrapping the `None` variant of an `Option<T>`. This is useful for validating methods that *should* return `None` but may return `Some` in some cases. For example, when inserting a key value pair that should be unique into a hashmap.
+
+**Debug-only assertions (no-op in release):**
 ```rust
 use std::collections::HashMap;
-use fluent_result::expect::ExpectNone;
+use fluent_result::expect::expect_none::dbg::ExpectNone;
+
+let mut map = HashMap::new();
+map.insert("key", "value").expect_none("key already exists");
+```
+
+**Always-on assertions:**
+```rust
+use std::collections::HashMap;
+use fluent_result::expect::expect_none::rls::ExpectNone;
 
 let mut map = HashMap::new();
 map.insert("key", "value").expect_none("key already exists");

@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `use fluent_result::bool::expect::dbg::Expect` for debug-only assertions, or
   - `use fluent_result::bool::expect::rls::Expect` for release-mode assertions
 
+- **BREAKING**: Refactored `ExpectNone` trait into two separate modules:
+  - `expect::expect_none::dbg::ExpectNone` - Only panics in debug mode (`debug_assert!` behavior)
+  - `expect::expect_none::rls::ExpectNone` - Always panics in all build modes (`assert!` behavior)
+  
+  **Migration**: Update imports from `use fluent_result::expect::ExpectNone` to either:
+  - `use fluent_result::expect::expect_none::dbg::ExpectNone` for debug-only assertions, or
+  - `use fluent_result::expect::expect_none::rls::ExpectNone` for release-mode assertions
+
 ## [0.8.4] - 2025/12/08
 
 ### Added
