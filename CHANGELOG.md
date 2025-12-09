@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- **BREAKING**: Refactored `bool::Expect` trait into two separate modules:
+  - `bool::expect::dbg::Expect` - Only panics in debug mode (`debug_assert!` behavior)
+  - `bool::expect::rls::Expect` - Always panics in all build modes (`assert!` behavior)
+  
+  **Migration**: Update imports from `use fluent_result::bool::Expect` to either:
+  - `use fluent_result::bool::expect::dbg::Expect` for debug-only assertions, or
+  - `use fluent_result::bool::expect::rls::Expect` for release-mode assertions
+
 ## [0.8.4] - 2025/12/08
 
 ### Added
