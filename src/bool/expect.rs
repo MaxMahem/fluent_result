@@ -1,6 +1,6 @@
-/// [`debug_assert!`]s for [`bool`] values.
+/// [`debug_assert!`]s for `bool` values.
 pub mod dbg {
-    /// An extension trait for [`bool`] that allows [`debug_assert!`]ing [`bool`] values.
+    /// An extension trait for `bool` that allows [`debug_assert!`]ing `bool` values.
     #[sealed::sealed]
     pub trait Expect {
         /// [`debug_assert!`]s that the value is `true`.
@@ -60,9 +60,9 @@ pub mod dbg {
     }
 }
 
-/// [`assert!`]s for [`bool`] values.
+/// [`assert!`]s for `bool` values.
 pub mod rls {
-    /// An extension trait for [`bool`] that allows [`assert!`]ing [`bool`] values.
+    /// An extension trait for `bool` that allows [`assert!`]ing `bool` values.
     #[sealed::sealed]
     pub trait Expect {
         /// [`assert!`]s that the value is `true`.

@@ -1,7 +1,4 @@
-//! Extension traits for [`bool`].
-
-/// [`assert!`] methods for expected [`bool`] values.
-pub mod expect;
+mod expect;
 mod then;
 
 pub use expect::{dbg, rls};

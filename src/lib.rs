@@ -1,9 +1,8 @@
 #![doc = include_str!("../README.md")]
 #![warn(clippy::pedantic)]
 #![warn(clippy::cargo)]
-#![warn(missing_docs)]
 
-/// Extension traits for [`bool`] values.
+/// Extension traits for `bool` values.
 pub mod bool;
 
 /// Extension traits for panic unwrapping [`Result`] and [`Option`] types.
