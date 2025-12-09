@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2025/12/09
+
 ### Added
 
 - Added `assert_true()` and `assert_false()` methods to `bool::dbg::Expect` and `bool::rls::Expect` traits
