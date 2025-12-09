@@ -1,22 +1,34 @@
-/// Debug-only [`assert!`]s for [`bool`].
-///
-/// This module provides an [`Expect`](dbg::Expect) trait that only panics in debug builds.
-/// In release builds, the assertions are no-ops.
+/// [`debug_assert!`]s for [`bool`] values.
 pub mod dbg {
-    /// An extension trait for [`bool`] that provides [`assert!`] wrapper methods for expected
-    /// `true` and `false` values.
-    ///
-    /// This trait only panics in debug mode (`cfg(debug_assertions)`). In release mode, it does
-    /// nothing.
+    /// An extension trait for [`bool`] that allows [`debug_assert!`]ing [`bool`] values.
     #[sealed::sealed]
     pub trait Expect {
-        /// [`assert!`]s that the value is `true` with `msg` as the assertion message.
+        /// [`debug_assert!`]s that the value is `true`.
         ///
-        /// Only panics in debug builds if the value is `false`.
+        /// # Panics
+        ///
+        /// Panics in debug builds if the value is `false`.
+        fn assert_true(self);
+
+        /// [`debug_assert!`]s that the value is `true` with `msg` as the assertion message.
+        ///
+        /// # Panics
+        ///
+        /// Panics in debug builds if the value is `false`.
         fn expect_true(self, msg: &str);
-        /// [`assert!`]s that the value is `false` with `msg` as the assertion message.
+
+        /// [`debug_assert!`]s that the value is `false`.
         ///
-        /// Only panics in debug builds if the value is `true`.
+        /// # Panics
+        ///
+        /// Panics in debug builds if the value is `true`.
+        fn assert_false(self);
+
+        /// [`debug_assert!`]s that the value is `false` with `msg` as the assertion message.
+        ///
+        /// # Panics
+        ///
+        /// Panics in debug builds if the value is `true`.
         fn expect_false(self, msg: &str);
     }
 
@@ -24,8 +36,20 @@ pub mod dbg {
     impl Expect for bool {
         #[inline]
         #[track_caller]
+        fn assert_true(self) {
+            debug_assert!(self, "assertion failed: expected `true` but was `false`");
+        }
+
+        #[inline]
+        #[track_caller]
         fn expect_true(self, msg: &str) {
             debug_assert!(self, "{}", msg);
+        }
+
+        #[inline]
+        #[track_caller]
+        fn assert_false(self) {
+            debug_assert!(!self, "assertion failed: expected `false` but was `true`");
         }
 
         #[inline]
@@ -36,25 +60,37 @@ pub mod dbg {
     }
 }
 
-/// Release-mode [`assert!`]s for [`bool`] values.
-///
-/// This module provides the [`Expect`](rls::Expect) trait that always panics when assertions fail,
-/// regardless of build mode.
+/// [`assert!`]s for [`bool`] values.
 pub mod rls {
-    /// An extension trait for [`bool`] that provides [`assert!`] wrapper methods for expected
-    /// `true` and `false` values.
-    ///
-    /// This trait always panics when assertions fail, regardless of build mode.
+    /// An extension trait for [`bool`] that allows [`assert!`]ing [`bool`] values.
     #[sealed::sealed]
     pub trait Expect {
+        /// [`assert!`]s that the value is `true`.
+        ///
+        /// # Panics
+        ///
+        /// Panics if the value is `false`.
+        fn assert_true(self);
+
         /// [`assert!`]s that the value is `true` with `msg` as the assertion message.
         ///
-        /// Always panics if the value is `false`.
+        /// # Panics
+        ///
+        /// Panics if the value is `false`.
         fn expect_true(self, msg: &str);
+
+        /// [`assert!`]s that the value is `false`.
+        ///
+        /// # Panics
+        ///
+        /// Panics if the value is `true`.
+        fn assert_false(self);
 
         /// [`assert!`]s that the value is `false` with `msg` as the assertion message.
         ///
-        /// Always panics if the value is `true`.
+        /// # Panics
+        ///
+        /// Panics if the value is `true`.
         fn expect_false(self, msg: &str);
     }
 
@@ -62,8 +98,20 @@ pub mod rls {
     impl Expect for bool {
         #[inline]
         #[track_caller]
+        fn assert_true(self) {
+            assert!(self, "assertion failed: expected `true` but was `false`");
+        }
+
+        #[inline]
+        #[track_caller]
         fn expect_true(self, msg: &str) {
             assert!(self, "{}", msg);
+        }
+
+        #[inline]
+        #[track_caller]
+        fn assert_false(self) {
+            assert!(!self, "assertion failed: expected `false` but was `true`");
         }
 
         #[inline]

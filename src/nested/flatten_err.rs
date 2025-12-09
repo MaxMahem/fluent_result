@@ -47,9 +47,7 @@ impl<T, EInner, EOuter> FlattenErr<T, EInner, EOuter> for Result<Result<T, EInne
 ///
 /// - `EIn`: The error type of the inner error.
 /// - `EOut`: The error type of the outer container.
-#[derive(
-    Debug, PartialEq, Eq, derive_more::TryUnwrap, derive_more::IsVariant, derive_more::Unwrap,
-)]
+#[derive(Debug, PartialEq, Eq, derive_more::TryUnwrap, derive_more::IsVariant, derive_more::Unwrap)]
 pub enum NestedError<EInner, EOuter> {
     /// The inner most error
     Inner(EInner),

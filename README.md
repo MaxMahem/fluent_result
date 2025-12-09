@@ -76,43 +76,45 @@ assert_eq!(Err("number is even".to_string()), bar(2));
 ```
 
 ### `bool::expect`
-Provides debug-only (`bool::expect::dbg`) and release-mode (`bool::expect::rls`) assertions for bool values.
+Provides debug-only (`bool::dbg`) and release-mode (`bool::rls`) assertions for bool values. Each mode offers both `assert_*()` methods with fixed panic messages and `expect_*()` methods with custom messages.
 
 **Debug-only assertions (no-op in release):**
 ```rust
-use fluent_result::bool::expect::dbg::Expect;
+use fluent_result::bool::dbg::Expect;
 
-true.expect_true("Panic message if false");
-false.expect_false("Panic message if true");
+true.assert_true();  // Fixed panic message
+true.expect_true("Custom panic message");  // Custom panic message
 ```
 
 **Always-on assertions:**
 ```rust
-use fluent_result::bool::expect::rls::Expect;
+use fluent_result::bool::rls::Expect;
 
-true.expect_true("Panic message if false");
-false.expect_false("Panic message if true");
+true.assert_true();  // Fixed panic message
+true.expect_true("Custom panic message");  // Custom panic message
 ```
 
 ### `expect_none`
-Provides debug-only (`expect_none::dbg`) and release-mode (`expect_none::rls`) assertions for unwrapping the `None` variant of an `Option<T>`. This is useful for validating methods that *should* return `None` but may return `Some` in some cases. For example, when inserting a key value pair that should be unique into a hashmap.
+Provides debug-only (`expect::dbg`) and release-mode (`expect::rls`) assertions for unwrapping the `None` variant of an `Option<T>`. This is useful for validating methods that *should* return `None` but may return `Some` in some cases. For example, when inserting a key value pair that should be unique into a hashmap. Each mode offers both `assert_none()` with a fixed panic message and `expect_none()` with a custom message.
 
 **Debug-only assertions (no-op in release):**
 ```rust
 use std::collections::HashMap;
-use fluent_result::expect::expect_none::dbg::ExpectNone;
+use fluent_result::expect::dbg::ExpectNone;
 
 let mut map = HashMap::new();
-map.insert("key", "value").expect_none("key already exists");
+map.insert("key", "value").assert_none();  // Fixed panic message
+map.insert("key2", "value2").expect_none("Custom panic message");  // Custom panic message
 ```
 
 **Always-on assertions:**
 ```rust
 use std::collections::HashMap;
-use fluent_result::expect::expect_none::rls::ExpectNone;
+use fluent_result::expect::rls::ExpectNone;
 
 let mut map = HashMap::new();
-map.insert("key", "value").expect_none("key already exists");
+map.insert("key", "value").assert_none();  // Fixed panic message
+map.insert("key2", "value2").expect_none("Custom panic message");  // Custom panic message
 ```
 
 ### `FlattenErr`

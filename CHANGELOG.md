@@ -6,23 +6,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `assert_true()` and `assert_false()` methods to `bool::dbg::Expect` and `bool::rls::Expect` traits
+  - These methods use fixed panic messages, similar to Rust's `unwrap()` pattern
+- Added `assert_none()` method to `expect::dbg::ExpectNone` and `expect::rls::ExpectNone` traits
+  - Uses a fixed panic message, similar to Rust's `unwrap()` pattern
+
 ### Changed
 
-- **BREAKING**: Refactored `bool::Expect` trait into two separate modules:
-  - `bool::expect::dbg::Expect` - Only panics in debug mode (`debug_assert!` behavior)
-  - `bool::expect::rls::Expect` - Always panics in all build modes (`assert!` behavior)
-  
-  **Migration**: Update imports from `use fluent_result::bool::Expect` to either:
-  - `use fluent_result::bool::expect::dbg::Expect` for debug-only assertions, or
-  - `use fluent_result::bool::expect::rls::Expect` for release-mode assertions
+- **BREAKING**: Renamed `unwrap_none()` to `assert_none()` in `ExpectNone` traits
+  - **Migration**: Replace `unwrap_none()` calls with `assert_none()`
 
-- **BREAKING**: Refactored `ExpectNone` trait into two separate modules:
-  - `expect::expect_none::dbg::ExpectNone` - Only panics in debug mode (`debug_assert!` behavior)
-  - `expect::expect_none::rls::ExpectNone` - Always panics in all build modes (`assert!` behavior)
+- **BREAKING**: Refactored `bool::Expect` trait module structure:
+  - `bool::dbg::Expect` - Only panics in debug mode (`debug_assert!` behavior)
+  - `bool::rls::Expect` - Always panics in all build modes (`assert!` behavior)
   
-  **Migration**: Update imports from `use fluent_result::expect::ExpectNone` to either:
-  - `use fluent_result::expect::expect_none::dbg::ExpectNone` for debug-only assertions, or
-  - `use fluent_result::expect::expect_none::rls::ExpectNone` for release-mode assertions
+  **Migration**: Update imports from `use fluent_result::bool::expect::dbg::Expect` to `use fluent_result::bool::dbg::Expect`, or from `use fluent_result::bool::expect::rls::Expect` to `use fluent_result::bool::rls::Expect`
+
+- **BREAKING**: Refactored `ExpectNone` trait module structure:
+  - `expect::dbg::ExpectNone` - Only panics in debug mode (`debug_assert!` behavior)
+  - `expect::rls::ExpectNone` - Always panics in all build modes (`assert!` behavior)
+  
+  **Migration**: Update imports from `use fluent_result::expect::expect_none::dbg::ExpectNone` to `use fluent_result::expect::dbg::ExpectNone`, or from `use fluent_result::expect::expect_none::rls::ExpectNone` to `use fluent_result::expect::rls::ExpectNone`
 
 ## [0.8.4] - 2025/12/08
 
