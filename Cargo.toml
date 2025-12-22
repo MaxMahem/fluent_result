@@ -15,7 +15,7 @@ categories = ["rust-patterns", "development-tools", "data-structures"]
 default = []
 
 [dependencies]
-derive_more = { version = "2.0.1", features = ["is_variant", "try_unwrap", "unwrap"] }
+derive_more = { version = "2.1.1", features = ["is_variant", "try_unwrap", "unwrap"] }
 sealed = "0.6.0"
 
 [dev-dependencies]
