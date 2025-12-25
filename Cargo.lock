@@ -35,10 +35,9 @@ dependencies = [
 
 [[package]]
 name = "fluent_result"
-version = "0.9.0"
+version = "0.9.1"
 dependencies = [
  "derive_more",
- "fluent_result",
  "sealed",
 ]
 

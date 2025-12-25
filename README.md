@@ -2,11 +2,14 @@
 
 [![Build](https://github.com/MaxMahem/fluent_result/actions/workflows/build.yml/badge.svg)](https://github.com/MaxMahem/fluent_result/actions/workflows/build.yml)
 [![Docs](https://github.com/MaxMahem/fluent_result/actions/workflows/docs.yml/badge.svg)](https://MaxMahem.github.io/fluent_result/fluent_result/index.html)
+[![Crates.io](https://img.shields.io/crates/v/fluent_result)](https://crates.io/crates/fluent_result)
 [![dependency status](https://deps.rs/repo/github/MaxMahem/fluent_result/status.svg)](https://deps.rs/repo/github/MaxMahem/fluent_result)
 [![codecov](https://codecov.io/gh/MaxMahem/fluent_result/graph/badge.svg?token=G75UDV0DDH)](https://codecov.io/gh/MaxMahem/fluent_result)
 ![GitHub License](https://img.shields.io/github/license/MaxMahem/fluent_result)
 
-A compact crate offering a suite of extensions providing helpers for manipulating and transforming `Result` and `Option` types fluently,as well as transforming types into `Result` and `Option` types.
+A compact crate offering a suite of extensions providing helpers for manipulating and transforming `Result` and `Option` types fluently.
+
+This crate is `no_std` compatible and contains no unsafe code. Some features are gated by `alloc` (enabled by default).
 
 ## Provided Traits
 ### `IntoOption`
@@ -140,6 +143,8 @@ assert_eq!(err, NestedError::Outer(2));
 Handles nested `Result` types by boxing errors into a `Box<dyn Error>`. This trait works with `Result`s with up to four layers of nesting, so long as all error types implement `std::error::Error`. This is useful when working with operations that produce nested `Result`s and erasing the error type is acceptable.
 
 If all the error types are the same, consider using `Result::flatten` instead. For results with only two layers of nesting, consider using `FlattenErr::flatten_err`.
+
+This trait requires the `alloc` feature, which is enabled by default.
 
 ```rust
 use std::error::Error;
