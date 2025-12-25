@@ -1,7 +1,8 @@
 [package]
 name = "fluent_result"
-version = "0.9.0"
+version = "0.9.1"
 edition = "2024"
+rust-version = "1.85.1"
 authors = ["Austin Stanley <maxtmahem@gmail.com>"]
 description = "Fluent postfix helpers for Rust's Result and Option types"
 license = "MIT OR Apache-2.0"
@@ -12,12 +13,10 @@ keywords = ["result", "option", "fluent", "postfix", "error-handling"]
 categories = ["rust-patterns", "development-tools", "data-structures"]
 
 [features]
-default = []
+default = ["alloc"]
+alloc = []
 
 [dependencies]
 derive_more = { version = "2.0.1", features = ["is_variant", "try_unwrap", "unwrap"] }
 sealed = "0.6.0"
-
-[dev-dependencies]
-fluent_result = { path = ".", features = [] }
 

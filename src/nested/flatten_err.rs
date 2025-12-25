@@ -1,3 +1,6 @@
+use core::error::Error;
+use core::fmt::{Display, Formatter};
+
 /// Allows flattening a [`Result<Result<T, EInner>, EOuter>`] into a [`Result<T, NestedError<EInner, EOuter>>`].
 #[sealed::sealed]
 pub trait FlattenErr<T, EInner, EOuter>: Sized {
@@ -55,28 +58,28 @@ pub enum NestedError<EInner, EOuter> {
     Outer(EOuter),
 }
 
-impl<EInner, EOuter> std::fmt::Display for NestedError<EInner, EOuter>
+impl<EInner, EOuter> Display for NestedError<EInner, EOuter>
 where
-    EInner: std::fmt::Display,
-    EOuter: std::fmt::Display,
+    EInner: Display,
+    EOuter: Display,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         match self {
-            NestedError::Outer(e) => write!(f, "{e}"),
-            NestedError::Inner(e) => write!(f, "{e}"),
+            Self::Outer(e) => write!(f, "{e}"),
+            Self::Inner(e) => write!(f, "{e}"),
         }
     }
 }
 
-impl<EInner, EOuter> std::error::Error for NestedError<EInner, EOuter>
+impl<EInner, EOuter> Error for NestedError<EInner, EOuter>
 where
-    EInner: std::error::Error + 'static,
-    EOuter: std::error::Error + 'static,
+    EInner: Error + 'static,
+    EOuter: Error + 'static,
 {
-    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
         match self {
-            NestedError::Outer(e) => Some(e),
-            NestedError::Inner(e) => Some(e),
+            Self::Outer(e) => Some(e),
+            Self::Inner(e) => Some(e),
         }
     }
 }

@@ -1,4 +1,4 @@
-use std::convert::Infallible;
+use core::convert::Infallible;
 
 /// A trait for unwrapping the [`Ok`] varaint of an [`Result<T, Infallible>`], panic free.
 ///
@@ -31,6 +31,6 @@ pub trait UnwrapNever<T> {
 impl<T> UnwrapNever<T> for Result<T, Infallible> {
     #[inline]
     fn unwrap_never(self) -> T {
-        unsafe { self.unwrap_unchecked() }
+        self.unwrap()
     }
 }
