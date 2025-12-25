@@ -1,10 +1,12 @@
 use core::error::Error;
 use core::fmt::{Display, Formatter};
 
-/// Allows flattening a [`Result<Result<T, EInner>, EOuter>`] into a [`Result<T, NestedError<EInner, EOuter>>`].
+use derive_more::{IsVariant, TryUnwrap, Unwrap};
+
+/// Allows flattening a [`Result<Result<T, EIn>, EOut>`] into a [`Result<T, NestedError<EIn, EOut>>`].
 #[sealed::sealed]
-pub trait FlattenErr<T, EInner, EOuter>: Sized {
-    /// Flattens a [`Result<Result<T, EInner>, EOuter>`] into a [`Result<T, NestedError<EInner, EOuter>>`].
+pub trait FlattenErr<T, EIn, EOut>: Sized {
+    /// Flattens a [`Result<Result<T, EIn>, EOut>`] into a [`Result<T, NestedError<EIn, EOut>>`].
     ///
     /// # Errors
     ///
@@ -29,13 +31,13 @@ pub trait FlattenErr<T, EInner, EOuter>: Sized {
     /// let err = result.flatten_err().expect_err("should be err");
     /// assert_eq!(err, NestedError::Outer(2));
     /// ```
-    fn flatten_err(self) -> Result<T, NestedError<EInner, EOuter>>;
+    fn flatten_err(self) -> Result<T, NestedError<EIn, EOut>>;
 }
 
 #[sealed::sealed]
-impl<T, EInner, EOuter> FlattenErr<T, EInner, EOuter> for Result<Result<T, EInner>, EOuter> {
+impl<T, EIn, EOut> FlattenErr<T, EIn, EOut> for Result<Result<T, EIn>, EOut> {
     #[inline]
-    fn flatten_err(self) -> Result<T, NestedError<EInner, EOuter>> {
+    fn flatten_err(self) -> Result<T, NestedError<EIn, EOut>> {
         match self {
             Ok(Ok(v)) => Ok(v),
             Ok(Err(e)) => Err(NestedError::Inner(e)),
@@ -44,25 +46,21 @@ impl<T, EInner, EOuter> FlattenErr<T, EInner, EOuter> for Result<Result<T, EInne
     }
 }
 
-/// An error created by [`FlattenErr::flatten_err`] a [`Result<Result<T, EInner>, EOuter>`].
+/// An error created by [`FlattenErr::flatten_err`] a [`Result<Result<T, EIn>, EOut>`].
 ///
 /// # Type Parameters
 ///
 /// - `EIn`: The error type of the inner error.
 /// - `EOut`: The error type of the outer container.
-#[derive(Debug, PartialEq, Eq, derive_more::TryUnwrap, derive_more::IsVariant, derive_more::Unwrap)]
-pub enum NestedError<EInner, EOuter> {
+#[derive(Debug, PartialEq, Eq, TryUnwrap, IsVariant, Unwrap)]
+pub enum NestedError<EIn, EOut> {
     /// The inner most error
-    Inner(EInner),
+    Inner(EIn),
     /// The outer most error
-    Outer(EOuter),
+    Outer(EOut),
 }
 
-impl<EInner, EOuter> Display for NestedError<EInner, EOuter>
-where
-    EInner: Display,
-    EOuter: Display,
-{
+impl<EIn: Display, EOut: Display> Display for NestedError<EIn, EOut> {
     fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         match self {
             Self::Outer(e) => write!(f, "{e}"),
@@ -71,11 +69,7 @@ where
     }
 }
 
-impl<EInner, EOuter> Error for NestedError<EInner, EOuter>
-where
-    EInner: Error + 'static,
-    EOuter: Error + 'static,
-{
+impl<EIn: Error + 'static, EOut: Error + 'static> Error for NestedError<EIn, EOut> {
     fn source(&self) -> Option<&(dyn Error + 'static)> {
         match self {
             Self::Outer(e) => Some(e),
