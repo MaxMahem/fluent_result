@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.1] - 2024/12/24
+
+### Added
+
+- **`no_std` support**: The crate is now `no_std` compatible
+  - Use `default-features = false` for pure `no_std` + `no_alloc` environments
+  - The `alloc` feature (enabled by default) provides `BoxErr` trait for boxing errors
+- Added `#![forbid(unsafe_code)]` - the crate is now completely safe Rust
+
 ## [0.9.0] - 2025/12/09
 
 ### Added

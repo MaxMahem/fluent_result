@@ -1,8 +1,5 @@
 /// Debug-only [`debug_assert!`] for [`Option`] values.
 pub mod dbg {
-    #[cfg(doc)]
-    use std::collections::HashMap;
-
     /// An extension trait for [`Option`] that allows [`debug_assert!`]ing the existance of the [`None`] variant.
     ///
     /// This trait only panics in debug mode (`cfg(debug_assertions)`). In release mode, it does
@@ -12,7 +9,8 @@ pub mod dbg {
         /// [`debug_assert!`] a [`Option`] is [`None`].
         ///
         /// This is useful for validating that a method that should return [`None`] does so. For
-        /// example when inserting a value into a [`HashMap`] who's key should be unique.
+        /// example when inserting a value into a [`HashMap`](std::collections::HashMap) who's key
+        /// should be unique.
         ///
         /// # Panics
         ///
@@ -31,7 +29,8 @@ pub mod dbg {
         /// [`debug_assert!`]s a [`Option`] is [`None`] with `msg`.
         ///
         /// This is useful for validating that a method that should return [`None`] does so. For
-        /// example when inserting a value into a [`HashMap`] who's key should be unique.
+        /// example when inserting a value into a [`HashMap`](std::collections::HashMap) who's key
+        /// should be unique.
         ///
         /// # Panics
         ///
@@ -66,16 +65,14 @@ pub mod dbg {
 
 /// Release-mode [`assert!`] for [`Option`] values.
 pub mod rls {
-    #[cfg(doc)]
-    use std::collections::HashMap;
-
     /// An extension trait for [`Option<T>`] that allows [`assert!`]ing the existance of the [`None`] variant.
     #[sealed::sealed]
     pub trait ExpectNone {
         /// [`assert!`]s a [`Option`] is [`None`].
         ///
         /// This is useful for validating that a method that should return [`None`] does so. For
-        /// example when inserting a value into a [`HashMap`] who's key should be unique.
+        /// example when inserting a value into a [`HashMap`](std::collections::HashMap) who's key
+        /// should be unique.
         ///
         /// # Panics
         ///
@@ -94,7 +91,8 @@ pub mod rls {
         /// [`assert!`]s a [`Option`] is [`None`] with `msg`.
         ///
         /// This is useful for validating that a method that should return [`None`] does so. For
-        /// example when inserting a value into a [`HashMap`] who's key should be unique.
+        /// example when inserting a value into a [`HashMap`](std::collections::HashMap) who's key
+        /// should be unique.
         ///
         /// # Panics
         ///
