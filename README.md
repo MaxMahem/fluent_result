@@ -49,33 +49,39 @@ This is useful for handling a variant by sinking it into a side-effecting functi
 See the documentation for brief examples.
 
 ### `bool::Then`
-Transforms `true` into `None` or `Err`, and `false` into `Some(())` or `Ok(())`.
+Transforms `bool` values into `Option` or `Result` types for easier control flow with the `?` operator, or to replace simple `if` statements.
 
-This is useful for ergonomically transforming boolean guards in methods that return `Option<T>` or `Result<T, E>`.
+**Convert to `Option`:**
+- `then_none()` - Returns `None` on true, `Some(())` on false (useful for guard clauses)
+
+**Convert to `Result`:**
+- `then_err(err)` - Returns `Err(err)` on true, `Ok(())` on false
+- `then_err_with(|| err)` - Lazy version of `then_err`
+- `then_result(on_true, on_false)` - Returns `Ok(on_true)` on true, `Err(on_false)` on false
+- `then_result_with(|| on_true, || on_false)` - Lazy version of `then_result`
 
 ```rust
 use fluent_result::bool::Then;
 
-fn foo(number: u32) -> Option<u32> {
-    // guard
+fn filter_odd(number: u32) -> Option<u32> {
     (number % 2 == 0).then_none()?;
-
-    // do some more work.
-
+    // do more work
     Some(number)
 }
-assert_eq!(None, foo(2));
+assert_eq!(None, filter_odd(2));
 
-
-fn bar(number: u32) -> Result<u32, String> {
-    // guard
+fn reject_even(number: u32) -> Result<u32, &'static str> {
     (number % 2 == 0).then_err("number is even")?;
-
-    // do some more work.
-
+    // do more work
     Ok(number)
 }
-assert_eq!(Err("number is even".to_string()), bar(2));
+assert_eq!(Err("number is even"), reject_even(2));
+
+fn validate_age(age: u32) -> Result<u32, &'static str> {
+    (age >= 18).then_result(age, "Must be 18 or older")
+}
+assert_eq!(Ok(21), validate_age(21));
+assert_eq!(Err("Must be 18 or older"), validate_age(16));
 ```
 
 ### `bool::expect`
