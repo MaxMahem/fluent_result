@@ -103,8 +103,8 @@ true.assert_true();  // Fixed panic message
 true.expect_true("Custom panic message");  // Custom panic message
 ```
 
-### `expect_none`
-Provides debug-only (`expect::dbg`) and release-mode (`expect::rls`) assertions for unwrapping the `None` variant of an `Option<T>`. This is useful for validating methods that *should* return `None` but may return `Some` in some cases. For example, when inserting a key value pair that should be unique into a hashmap. Each mode offers both `assert_none()` with a fixed panic message and `expect_none()` with a custom message.
+### `ExpectNone`
+Provides debug-only (`expect::dbg`) and release-mode (`expect::rls`) assertions for unwrapping the `None` variant of an `Option<T>`. This is useful for validating methods that *should* return `None` but may return `Some` in some cases. For example, when inserting a key-value pair that should be unique into a hashmap. Each mode offers both `assert_none()` with a fixed panic message and `expect_none()` with a custom message.
 
 **Debug-only assertions (no-op in release):**
 ```rust
