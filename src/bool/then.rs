@@ -66,14 +66,14 @@ pub trait Then {
     where
         F: FnOnce() -> E;
 
-    /// Returns [`Ok(on_true)`](Ok) if the `bool` value is `true`, and [`Err(on_false)`](Err)
-    /// otherwise.
+    /// Converts the `bool` value into a [`Result`] by returning [`Ok(on_true)`](Ok) if the `bool`
+    /// value is `true`, and [`Err(on_false)`](Err) otherwise.
     ///
     /// This is equivalent to `if self { Ok(on_true) } else { Err(on_false) }`, but may be more
     /// convienent for some expressions. It also allows for early returns from methods that return
     /// [`Result`] via the `?` operator.
     ///
-    /// Note these values are eagerly evaluated, for a lazily evaluated version see [`Then::then_result_with`].
+    /// Note these values are eagerly evaluated, for a lazily evaluated version see [`Then::to_result_with`].
     ///
     /// # Arguments
     ///
@@ -90,22 +90,23 @@ pub trait Then {
     /// use fluent_result::bool::Then;
     ///
     /// fn validate_age(age: u32) -> Result<u32, &'static str> {
-    ///     (age >= 18).then_result(age, "Age must be 18 or older")
+    ///     (age >= 18).to_result(age, "Age must be 18 or older")
     /// }
     ///
     /// assert_eq!(validate_age(21), Ok(21));
     /// assert_eq!(validate_age(16), Err("Age must be 18 or older"));
     /// ```
-    fn then_result<T, E>(self, on_true: T, on_false: E) -> Result<T, E>;
+    fn to_result<T, E>(self, on_true: T, on_false: E) -> Result<T, E>;
 
-    /// Runs `on_true` to create a value to return as [`Ok`] if the `bool` value is `true`,
-    /// and runs `on_false` to create a value to return as [`Err`] if the `bool` value is `false`.
+    /// Converts the `bool` value into a [`Result`] by running `on_true` to create a value to return
+    /// as [`Ok`] if the `bool` value is `true`, and runs `on_false` to create a value to return as
+    /// [`Err`] if the `bool` value is `false`.
     ///
     /// This is equivalent to `if self { Ok(on_true()) } else { Err(on_false()) }`, but may be more
     /// convienent for some expressions. It also allows for early returns from methods that return
     /// [`Result`] via the `?` operator.
     ///
-    /// Note these values are lazily evaluated, for an eagerly evaluated version see [`Then::then_result`].
+    /// Note these values are lazily evaluated, for an eagerly evaluated version see [`Then::to_result`].
     ///
     /// # Arguments
     ///
@@ -123,14 +124,14 @@ pub trait Then {
     ///
     /// fn parse_positive(value: &str) -> Result<u32, String> {
     ///     let n = value.parse::<u32>().map_err(|_| format!("Invalid number: {value}"))?;
-    ///     (n > 0).then_result_with(|| n, || format!("Must be positive, got {n}"))
+    ///     (n > 0).to_result_with(|| n, || format!("Must be positive, got {n}"))
     /// }
     ///
     /// assert_eq!(parse_positive("42"), Ok(42));
     /// assert!(parse_positive("0").is_err());
     /// assert!(parse_positive("abc").is_err());
     /// ```
-    fn then_result_with<T, E>(self, on_true: impl FnOnce() -> T, on_false: impl FnOnce() -> E) -> Result<T, E>;
+    fn to_result_with<T, E>(self, on_true: impl FnOnce() -> T, on_false: impl FnOnce() -> E) -> Result<T, E>;
 
     /// Returns [`None`] if the `bool` value is `true`, and [`Some(())`](Some) otherwise.
     ///
@@ -174,12 +175,12 @@ impl Then for bool {
     }
 
     #[inline]
-    fn then_result<T, E>(self, on_true: T, on_false: E) -> Result<T, E> {
+    fn to_result<T, E>(self, on_true: T, on_false: E) -> Result<T, E> {
         if self { Ok(on_true) } else { Err(on_false) }
     }
 
     #[inline]
-    fn then_result_with<T, E>(self, on_true: impl FnOnce() -> T, on_false: impl FnOnce() -> E) -> Result<T, E> {
+    fn to_result_with<T, E>(self, on_true: impl FnOnce() -> T, on_false: impl FnOnce() -> E) -> Result<T, E> {
         if self { Ok(on_true()) } else { Err(on_false()) }
     }
 
