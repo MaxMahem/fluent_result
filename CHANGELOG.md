@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.2] - 2025/12/25
+
 ### Added
 
 - Added `then_result()` and `then_result_with()` methods to `bool::Then` trait

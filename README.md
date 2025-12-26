@@ -70,7 +70,7 @@ fn filter_odd(number: u32) -> Option<u32> {
 }
 assert_eq!(None, filter_odd(2));
 
-fn reject_even(number: u32) -> Result<u32, String> {
+fn reject_even(number: u32) -> Result<u32, &'static str> {
     (number % 2 == 0).then_err("number is even")?;
     // do more work
     Ok(number)
