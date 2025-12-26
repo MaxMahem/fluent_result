@@ -19,10 +19,15 @@ pub mod dbg {
         /// # Examples
         ///
         /// ```rust
-        /// use fluent_result::expect::dbg::ExpectNone;
+        /// use fluent_result::expect::rls::ExpectNone;
+        /// use std::collections::HashMap;
         ///
-        /// let none: Option<u8> = None;
-        /// none.assert_none();
+        /// fn add_new_user(users: &mut HashMap<String, u32>, name: &str, id: u32) {
+        ///     users.insert(name.to_string(), id).assert_none();
+        /// }
+        ///
+        /// let mut users = HashMap::new();
+        /// add_new_user(&mut users, "Alice", 1);
         /// ```
         fn assert_none(self);
 
@@ -39,10 +44,15 @@ pub mod dbg {
         /// # Examples
         ///
         /// ```rust
-        /// use fluent_result::expect::dbg::ExpectNone;
+        /// use fluent_result::expect::rls::ExpectNone;
+        /// use std::collections::HashMap;
         ///
-        /// let none: Option<u8> = None;
-        /// none.expect_none("test");
+        /// fn add_new_user(users: &mut HashMap<String, u32>, name: &str, id: u32) {
+        ///     users.insert(name.to_string(), id).expect_none("User already exists");
+        /// }
+        ///
+        /// let mut users = HashMap::new();
+        /// add_new_user(&mut users, "Alice", 1);
         /// ```
         fn expect_none(self, msg: &str);
     }
@@ -82,9 +92,14 @@ pub mod rls {
         ///
         /// ```rust
         /// use fluent_result::expect::rls::ExpectNone;
+        /// use std::collections::HashMap;
         ///
-        /// let none: Option<u8> = None;
-        /// none.assert_none();
+        /// fn add_new_user(users: &mut HashMap<String, u32>, name: &str, id: u32) {
+        ///     users.insert(name.to_string(), id).assert_none();
+        /// }
+        ///
+        /// let mut users = HashMap::new();
+        /// add_new_user(&mut users, "Alice", 1);
         /// ```
         fn assert_none(self);
 
@@ -102,9 +117,14 @@ pub mod rls {
         ///
         /// ```rust
         /// use fluent_result::expect::rls::ExpectNone;
+        /// use std::collections::HashMap;
         ///
-        /// let none: Option<u8> = None;
-        /// none.expect_none("test");
+        /// fn add_new_user(users: &mut HashMap<String, u32>, name: &str, id: u32) {
+        ///     users.insert(name.to_string(), id).expect_none("User already exists");
+        /// }
+        ///
+        /// let mut users = HashMap::new();
+        /// add_new_user(&mut users, "Alice", 1);
         /// ```
         fn expect_none(self, msg: &str);
     }

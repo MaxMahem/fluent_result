@@ -6,6 +6,10 @@ fn sink_option() {
     let mut log = String::new();
     Some("oops").sink(|e| log.push_str(e));
     assert_eq!(log, "oops");
+
+    log.clear();
+    None::<&str>.sink(|e| log.push_str(e));
+    assert!(log.is_empty());
 }
 
 #[test]

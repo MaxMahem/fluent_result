@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `then_result()` and `then_result_with()` methods to `bool::Then` trait
+  - Transform a `bool` into a `Result<T, E>` - returns `Ok(on_true)` when true and `Err(on_false)` when false
+
 ## [0.9.1] - 2024/12/24
 
 ### Added
