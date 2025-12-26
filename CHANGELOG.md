@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0] - 2025/12/26
+
+### Changed
+
+- **BREAKING**: Renamed `then_result()` to `to_result()` and `then_result_with()` to `to_result_with()` in `bool::Then` trait
+  - **Migration**: Replace `then_result(ok, err)` calls with `to_result(ok, err)` and `then_result_with(|| ok, || err)` with `to_result_with(|| ok, || err)`
+
 ## [0.9.2] - 2025/12/25
 
 ### Added
