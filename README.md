@@ -57,8 +57,10 @@ Transforms `bool` values into `Option` or `Result` types for easier control flow
 **Convert to `Result`:**
 - `then_err(err)` - Returns `Err(err)` on true, `Ok(())` on false
 - `then_err_with(|| err)` - Lazy version of `then_err`
-- `then_result(on_true, on_false)` - Returns `Ok(on_true)` on true, `Err(on_false)` on false
-- `then_result_with(|| on_true, || on_false)` - Lazy version of `then_result`
+- `then_ok_or(err)` - Returns `Ok(())` on true, `Err(err)` on false
+- `then_ok_or_else(|| err)` - Lazy version of `then_ok_or`
+- `to_result(on_true, on_false)` - Returns `Ok(on_true)` on true, `Err(on_false)` on false
+- `to_result_with(|| on_true, || on_false)` - Lazy version of `to_result`
 
 ```rust
 use fluent_result::bool::Then;
@@ -78,7 +80,7 @@ fn reject_even(number: u32) -> Result<u32, &'static str> {
 assert_eq!(Err("number is even"), reject_even(2));
 
 fn validate_age(age: u32) -> Result<u32, &'static str> {
-    (age >= 18).then_result(age, "Must be 18 or older")
+    (age >= 18).to_result(age, "Must be 18 or older")
 }
 assert_eq!(Ok(21), validate_age(21));
 assert_eq!(Err("Must be 18 or older"), validate_age(16));
