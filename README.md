@@ -44,7 +44,7 @@ assert_eq!(Err(42), err);
 ### Sink
 Handle a variant of a `Result` or `Option` by sinking it into a `Sink`. 
 
-This is useful for handling a variant by sinking it into a side-effecting function, for example logging. Especially useful for methods that return `Result<(), E>` for example.
+This is useful for handling a variant by sinking it into a side-effecting function, for example, logging. Especially useful for methods that return `Result<(), E>` for example.
 
 See the documentation for brief examples.
 
@@ -57,8 +57,6 @@ Transforms `bool` values into `Option` or `Result` types for easier control flow
 **Convert to `Result`:**
 - `then_err(err)` - Returns `Err(err)` on true, `Ok(())` on false
 - `then_err_with(|| err)` - Lazy version of `then_err`
-- `then_ok_or(err)` - Returns `Ok(())` on true, `Err(err)` on false
-- `then_ok_or_else(|| err)` - Lazy version of `then_ok_or`
 - `to_result(on_true, on_false)` - Returns `Ok(on_true)` on true, `Err(on_false)` on false
 - `to_result_with(|| on_true, || on_false)` - Lazy version of `to_result`
 
